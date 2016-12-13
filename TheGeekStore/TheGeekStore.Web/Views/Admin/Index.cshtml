@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<h2>Administration</h2>
+<hr/>
+
+<!--menu-->
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a data-toggle="tab" href="#tab-overview">Overview</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#tab-categories">Categories</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#tab-products">Products</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#tab-top10">Products</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#tab-customers">Customers</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#tab-admin">Admins</a></li>
+</ul>
+
+<!--Content-->
+<div class="tab-content">
+    <div id="tab-overview" class="tab-pane active">
+        @Html.Partial("_AdminOverview")
+    </div>
+    <div id="tab-categories" class="tab-pane">
+        @Html.Partial("_AdminCategories")
+    </div>
+    <div id="tab-products" class="tab-pane">
+        @Html.Partial("_AdminCategories")
+    </div>
+    <div id="tab-top10" class="tab-pane">
+        @Html.Partial("_AdminCategories")
+    </div>
+    <div id="tab-customers" class="tab-pane">
+        @Html.Partial("_AdminCategories")
+    </div>
+    <div id="tab-admins" class="tab-pane">
+        @Html.Partial("_AdminCategories")
+    </div>
+</div>
