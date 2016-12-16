@@ -1,0 +1,45 @@
+﻿@model TheGeekStore.Core.ViewModels.AdminOverviewViewModel
+<h4>Store overview</h4>
+
+<div class="row">
+    <!--LEFT-->
+    <div class="col-md-6">
+        <div class="col-md-6">
+            <span>Categories:</span>
+        </div>
+        <div class="col-md-6">
+            <span>@Model.CountCategories</span>
+        </div>
+    </div>
+    <!--Right-->
+    <div class="col-md-6">
+        <div class="col-md-6">
+            <span>Products:</span>
+        </div>
+        <div class="col-md-6">
+            <span>@Model.CountProducts</span>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <!--LEFT-->
+    <div class="col-md-6">
+        <div class="col-md-6">
+            <span>Customers:</span>
+        </div>
+        <div class="col-md-6">
+            <span>@Model.CountUsers</span>
+        </div>
+    </div>
+    <!--Right-->
+    <div class="col-md-6">
+        <div class="col-md-6">
+            <span>Featured Products:</span>
+        </div>
+        <div class="col-md-6">
+            <span>@Model.CountFeaturedProducts</span>
+        </div>
+    </div>
+</div>
+<hr />

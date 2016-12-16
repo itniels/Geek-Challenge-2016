@@ -1,0 +1,71 @@
+﻿@using TheGeekStore.Core.Models
+@model TheGeekStore.Core.Models.CategoryModel
+
+@{
+    ViewBag.Title = "Browse";
+}
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            In Stock
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td>
+                <img src="@item.ImagePath" width="150"/>
+                <br/>
+                <span>@item.ProductNumber</span><br/>
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td class="category-description-col">
+                @item.Description
+            </td>
+            <td>
+                <span>@item.Price.ToString("C")</span>
+            </td>
+            <td>
+                @if (item.InStock > 10)
+                {
+                    <span class="label label-success">Yes</span>
+                }
+                else if (item.InStock > 0)
+                {
+                    <span class="label label-warning">Few left!</span>
+                }
+                else
+                {
+                    <span class="label label-danger">No</span>
+                }
+            </td>
+            <td>
+                    <div class="pull-right">
+                        <button class="btn btn-xs btn-primary" onclick="location.href = '@Url.Action("ViewProduct", "Product", new {id = item.Id})'">View Product</button>
+                        <button class="btn btn-xs btn-success" onclick="showDeleteModal(@item.Id, '@Url.Action("AddToCart")');" data-toggle="modal" data-target="#modalDelete">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Add to cart
+                        </button>
+                    </div>
+                </td>
+        </tr>
+    }
+
+</table>

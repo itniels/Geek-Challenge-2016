@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGeekStore", "TheGeekStore\TheGeekStore.csproj", "{35FBBF59-E295-4D05-A073-6F87F63D4A67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGeekStore.Web", "TheGeekStore.Web\TheGeekStore.Web.csproj", "{35FBBF59-E295-4D05-A073-6F87F63D4A67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGeekStore.Core", "TheGeekStore.Core\TheGeekStore.Core.csproj", "{031133D2-73BB-46AA-AA6D-95AAECB94818}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{35FBBF59-E295-4D05-A073-6F87F63D4A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35FBBF59-E295-4D05-A073-6F87F63D4A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35FBBF59-E295-4D05-A073-6F87F63D4A67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{031133D2-73BB-46AA-AA6D-95AAECB94818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{031133D2-73BB-46AA-AA6D-95AAECB94818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{031133D2-73BB-46AA-AA6D-95AAECB94818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{031133D2-73BB-46AA-AA6D-95AAECB94818}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

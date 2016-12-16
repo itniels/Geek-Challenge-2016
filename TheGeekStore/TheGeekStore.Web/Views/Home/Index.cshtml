@@ -1,0 +1,134 @@
+﻿@model TheGeekStore.Core.ViewModels.HomeIndexViewModel
+@using System.Web.UI.WebControls
+@using TheGeekStore.Core.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>The Geek Store</h1>
+    <p class="lead">
+        Welcome to TGS, here we have everyting your geeky heart desires!<br />
+        Check out our daily deals!
+    </p>
+    <p><a href="#" class="btn btn-primary btn-lg">Daily Deals &raquo;</a></p>
+</div>
+
+<!-- Search-->
+<div class="well well-sm">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Search</h4>
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="col-md-11">
+            <input class="form-control" type="text" placeholder="Search product"/>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-info">Go!</button>
+        </div>
+    </div>
+</div>
+
+<!-- Featured products-->
+<div class="well well-sm">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Most popular products</h4>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (ProductModel item in Model.TopSold)
+        {
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@item.Name</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            @item.Description
+                        </p>
+                        <p>
+                            <button class="pull-right btn btn-sm btn-primary" onclick="location.href = '@Url.Action("ViewProduct", "Product", new {id = item.Id})'">View Product &raquo;</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <!-- Newsletter-->
+            <div class="well well-sm">
+                <h4>Signup for our Newsletter</h4>
+                <span>@Html.TextBox("newsletterSignup", null, new { PlaceHolder = "Enter your e-mail" })</span>
+                <span><button class="btn btn-sm btn-success" onclick="alert('Congrats! You have signed up for absolutely nothing, enjoy ;)');">Signup</button></span>
+            </div>
+            <!-- Featured product-->
+            <div class="well well-sm">
+                <h4>Featured product</h4>
+                @if (Model.Featuredproduct != null)
+            {
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Model.Featuredproduct.Name</h3>
+                        </div>
+                        <div class="panel-body">
+                            <img src="@Model.Featuredproduct.ImagePath" width="320" />
+                            <p>
+                                @Model.Featuredproduct.Description
+                            </p>
+                            <p>
+                                <button class="pull-right btn btn-sm btn-primary" onclick="location.href = '@Url.Action("ViewProduct", "Product", new {id = Model.Featuredproduct.Id})'">View Product &raquo;</button>
+                            </p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>No featured products found!</p>
+                }
+            </div>
+        </div>
+
+
+
+        <!-- Latest news -->
+        <div class="col-md-7">
+            <div class="well well-sm">
+                <h4>Latest news</h4>
+                @foreach (NewsModel item in Model.LatestNews)
+            {
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <span>@item.Title</span>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span class="pull-right news-item-time">@item.Time</span>
+                                    </div>
+                                </div>
+
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>@item.GetExcerpt()</p>
+                            <div class="pull-right">
+                                @Html.ActionLink("Read more »", "ReadArticle", "News", new { id = item.Id }, new { id = item.Id })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <hr />

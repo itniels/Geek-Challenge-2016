@@ -1,0 +1,62 @@
+﻿@using System.Web.UI.WebControls
+@using TheGeekStore.Core.Models
+@model IEnumerable<TheGeekStore.Core.Models.CategoryModel>
+<h4>Categories</h4>
+
+<!--Menu-->
+<div class="row">
+    <div class="pull-right">
+        @*<button class="btn btn-sm btn-success" onclick="location.href = '@Url.Action("Create", "Category")'">New Category</button>*@
+        <button class="btn btn-sm btn-success" onclick="changeView('/Category/Create');">New Category</button>
+    </div>
+</div>
+<br/>
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Products
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@item.ImagePath" width="150" />
+            </td>
+            <td>
+                <b><span>@item.Name</span></b>
+            </td>
+            <td class="category-description-col">
+                <span>@item.GetExcerpt()</span>
+            </td>
+            <td>
+                <span>@item.Products.Count</span>
+            </td>
+            
+            <td>
+                <div class="pull-right listview-menu-button">
+                    <div class="dropdown listview-menu-button">
+                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="glyphicon glyphicon-tasks"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li class="power-menu-edit"><a href="#" onclick="location.href = '@Url.Action("Edit", "Category", new {id = item.Id})'"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+
+                            <li class="power-menu-delete"><a href="#" onclick="showDeleteModal(@item.Id, '@Url.Action("Delete", "Category")');" data-toggle="modal" data-target="#modalDelete"><span class="glyphicon glyphicon-remove"></span> <span class="power-menu-delete-text">Delete</span> </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
