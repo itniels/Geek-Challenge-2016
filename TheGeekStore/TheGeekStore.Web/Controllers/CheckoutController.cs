@@ -9,7 +9,7 @@ namespace TheGeekStore.Controllers
     public class CheckoutController : Controller
     {
         // GET: Checkout
-        public ActionResult Cart()
+        public ActionResult CheckOutCart()
         {
             return View();
         }

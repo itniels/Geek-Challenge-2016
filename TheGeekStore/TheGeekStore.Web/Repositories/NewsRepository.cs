@@ -10,7 +10,7 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Repositories
 {
-    public class NewsRepository : IRepository<NewsModel>, INewsRepository
+    public class NewsRepository : IRepository<NewsModel>
     {
         private ApplicationDbContext context = new ApplicationDbContext();
 

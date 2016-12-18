@@ -10,17 +10,19 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Repositories
 {
-    public class ProductRepository : IRepository<ProductModel>, IProductRepository<ProductModel>
+    public class ProductRepository : IRepository<ProductModel>
     {
         ApplicationDbContext context = new ApplicationDbContext();
         public void Add(ProductModel entity)
         {
             context.Products.Add(entity);
+            context.SaveChanges();
         }
 
         public void AddRange(IEnumerable<ProductModel> entites)
         {
             context.Products.AddRange(entites);
+            context.SaveChanges();
         }
 
         public void Edit(ProductModel entity)

@@ -10,7 +10,7 @@ namespace TheGeekStore.Core.Models
     [Table(name: "CartItems")]
     public class CartItemModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public ProductModel Product { get; set; }
         public CartModel Cart { get; set; }
         public int Count { get; set; }

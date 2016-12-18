@@ -46,6 +46,7 @@
     <Compile Include="Interfaces\INewsRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="JsonModels\JsonCartInfo.cs" />
     <Compile Include="Models\CartItemModel.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />

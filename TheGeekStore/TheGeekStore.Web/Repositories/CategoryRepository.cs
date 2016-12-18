@@ -11,7 +11,7 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Web.Repositories
 {
-    public class CategoryRepository : IRepository<CategoryModel>, ICategoryRepository
+    public class CategoryRepository : IRepository<CategoryModel>
     {
         ApplicationDbContext context = new ApplicationDbContext();
 

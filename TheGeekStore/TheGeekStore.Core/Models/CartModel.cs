@@ -10,9 +10,11 @@ namespace TheGeekStore.Core.Models
     [Table(name: "Carts")]
     public class CartModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         
         public string UserId { get; set; }
+
+        public DateTime LastAccessed { get; set; }
 
         public virtual ICollection<CartItemModel> CartItems { get; set; }
     }
