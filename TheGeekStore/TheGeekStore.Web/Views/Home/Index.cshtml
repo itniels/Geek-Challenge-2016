@@ -11,7 +11,7 @@
         Welcome to TGS, here we have everyting your geeky heart desires!<br />
         Check out our daily deals!
     </p>
-    <p><a href="#" class="btn btn-primary btn-lg">Daily Deals &raquo;</a></p>
+    <p><a href="@Url.Action("Index", "DailyDeals")" class="btn btn-primary btn-lg">Daily Deals &raquo;</a></p>
 </div>
 
 <!-- Search-->
@@ -103,7 +103,7 @@
         <!-- Latest news -->
         <div class="col-md-7">
             <div class="well well-sm">
-                <h4>Latest news</h4>
+                <h4>@Html.ActionLink("Latest News", "Index", "News")</h4>
                 @foreach (NewsModel item in Model.LatestNews)
             {
                     <div class="panel panel-success">

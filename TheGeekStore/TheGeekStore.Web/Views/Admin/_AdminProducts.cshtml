@@ -34,7 +34,7 @@
                 <img src="@item.ImagePath" width="150" />
             </td>
             <td>
-                <b><span>@item.Name</span></b>
+                <b><span>@Html.ActionLink(@item.Name, "ViewProduct", "Product", new {id = @item.Id}, new { Title = "See product page" })</span></b>
                 <br />
                 <span>(@item.ProductNumber)</span>
             </td>

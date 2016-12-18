@@ -1,7 +1,57 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About TGS";
 }
-<h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="row">
+    <!--Left-->
+    <div class="col-md-8">
+        <p><b>The TGS Store is a concept and NOT a real store.</b></p>
+        <p>It was created for The Geek Challenge 2016, by Niels Schmidt, and all copyright goes to Niels Schmidt for all content on this site.</p>
+        @*<hr />*@
+        <div class="alert alert-warning" role="alert">
+            <span>Any purchases made on this site are fictional! and will NOT result in any products being delivered OR money being charged.</span>
+        </div>
+    </div>
+    <!--Right-->
+    <div class="col-md-4">
+        <img src="~/Content/Images/Site/Niels_Small.png" width="250" />
+    </div>
+</div>
+<h3>Technical Information</h3>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Programming Languages</h4>
+        <p>It is based on C# MVC using HTML5, CSS3, JavaScript and JQuery with an MS SQL Database backend.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Libraries Used</h4>
+        <p><b>MVC</b></p>
+        <p>The foundation of this is Microsoft MVC Framework.</p>
+        
+        <p><b>SignalR</b></p>
+        <p>To provide realtime data on pages i have used the SignalR library from Microsoft with JavaScript to make a persistent connection and track changes in realtime.</p>
+        
+        <p><b>JSON.NET</b></p>
+        <p>To easily convert objects and lists from ´backend to frontend, I am using JSON.NET to convert to JSON objects and send them via Ajax requests to the frontend.</p>
+        
+        <p><b>HangFire.IO</b></p>
+        <p>To provide some background tasks running at intervals or schedules I am using HangFire.IO librabry to accomplish this.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Hosting</h4>
+        <p>This site is hosten on my own server using Windows 2012 with IIS WebServer and MS SQL database.<br/>
+        The SSL certificate is a free Let's Encrypt certificate issued to me.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Graphics and Icons</h4>
+        <p>All graphics and icons on these pages are royalty free from Iconfinder.com and Iconarchive.com</p>
+    </div>
+</div>
+<br />

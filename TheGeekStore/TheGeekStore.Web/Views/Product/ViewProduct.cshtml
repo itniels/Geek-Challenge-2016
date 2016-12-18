@@ -1,11 +1,13 @@
 ﻿@using TheGeekStore.Core.Models
 @model TheGeekStore.Core.ViewModels.ViewProductViewModel
 @{
-    ViewBag.Title = "ViewProduct";
+    ViewBag.Title = Model.Product.Name + " in " + Model.Product.Category.Name;
 }
 
 <h2>@Model.Product.Name</h2>
-<h4>@Model.Product.ProductNumber</h4>
+<h5>(@Model.Product.ProductNumber)</h5>
+@*<h5>In <b>@Html.ActionLink(@Model.Product.Category.Name, "Browse", "Category", new { id = Model.Product.Category.Id }, null)</b></h5>*@
+
 <hr/>
 <div class="row">
     <div class="col-md-6">
@@ -84,7 +86,7 @@
 <div class="well well-sm">
     <div class="row">
         <div class="col-md-12">
-            <h4>Related products</h4>
+            <h4>Related <b>@Html.ActionLink(@Model.Product.Category.Name, "Browse", "Category", new {id = Model.Product.Category.Id},null)</b> products</h4>
         </div>
     </div>
     <div class="row">
