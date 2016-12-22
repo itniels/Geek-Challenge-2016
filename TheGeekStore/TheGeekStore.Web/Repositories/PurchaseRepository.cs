@@ -10,9 +10,14 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Repositories
 {
-    public class PurchaseRepository : IRepository<PurchaseModel>
+    public class PurchaseRepository : IDisposable, IRepository<PurchaseModel>
     {
-        private ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context;
+
+        public PurchaseRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public void Add(PurchaseModel entity)
         {
@@ -68,6 +73,25 @@ namespace TheGeekStore.Repositories
         public IEnumerable<PurchaseModel> FindAny(Expression<Func<PurchaseModel, bool>> predicate)
         {
             return context.Set<PurchaseModel>().Where(predicate);
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

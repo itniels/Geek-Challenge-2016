@@ -17,5 +17,34 @@ namespace TheGeekStore.Core.Models
         public DateTime LastAccessed { get; set; }
 
         public virtual ICollection<CartItemModel> CartItems { get; set; }
+
+        public double GetTotalPrice()
+        {
+            double total = 0;
+            if (CartItems != null)
+            {
+                foreach (CartItemModel item in CartItems)
+                {
+                    if (item.Product != null)
+                    {
+                        total += (item.Product.Price*item.Count);
+                    }
+                }
+            }
+            return total;
+        }
+
+        public int GetTotalItemCount()
+        {
+            int count = 0;
+            if (CartItems != null)
+            {
+                foreach (CartItemModel item in CartItems)
+                {
+                    count += item.Count;
+                }
+            }
+            return count;
+        }
     }
 }

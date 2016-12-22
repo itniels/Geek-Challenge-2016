@@ -19,7 +19,7 @@
                 <span class="text text-info">Price:</span>
             </div>
             <div class="col-md-7">
-                <span class="text text-primary">@Model.Product.Price.ToString("C")</span>
+                <span class="text text-primary"><span>$</span>@Model.Product.Price.ToString("0.00")</span>
             </div>
         </div>
         <hr/>
@@ -62,7 +62,7 @@
         <div class="row">
             @if (Model.Product.InStock > 0)
             {
-                <button class="col-md-12 btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</button>
+                <button class="col-md-12 btn btn-success" onclick="addToCart(@Model.Product.Id);"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</button>
             }
             else
             {

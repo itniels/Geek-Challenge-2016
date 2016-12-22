@@ -19,26 +19,25 @@ namespace TheGeekStore.Core.Models
 
         public string PromoCode { get; set; }
 
-        public double Price { get; set; }
-
         public double PriceShipping { get; set; }
 
-        // Cart and Items
-        public virtual CartModel Cart { get; set; }
-
-        // Address
-        public string AdrName { get; set; }
-
-        public string AdrAtt { get; set; }
-
-        public string AdrStreet { get; set; }
-
-        public int AdrPostal { get; set; }
-
-        public string AdrCity { get; set; }
-
-        public string AdrCountry { get; set; }
+        // Items purchased
+        public virtual ICollection<PurchaseItemModel> PurchaseItems { get; set; }
 
 
+        public double GetCartPrice()
+        {
+            double sum = 0;
+            foreach (PurchaseItemModel item in PurchaseItems)
+            {
+                sum += item.GetTotalPrice();
+            }
+            return sum;
+        }
+
+        public double GetTotalPrice()
+        {
+            return GetCartPrice() + PriceShipping;
+        }
     }
 }

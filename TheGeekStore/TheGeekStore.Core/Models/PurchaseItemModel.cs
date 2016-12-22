@@ -7,17 +7,24 @@ using System.Threading.Tasks;
 
 namespace TheGeekStore.Core.Models
 {
-    [Table(name: "CartItems")]
-    public class CartItemModel
+    [Table(name: "PurchaseItems")]
+    public class PurchaseItemModel
     {
         public int Id { get; set; }
-        public virtual ProductModel Product { get; set; }
-        public virtual CartModel Cart { get; set; }
+
+        public int ProductId { get; set; }
+
+        public string Name { get; set; }
+
+        public string ProductNumber { get; set; }
+
         public int Count { get; set; }
+
+        public double Price { get; set; }
 
         public double GetTotalPrice()
         {
-            return (Product.Price*Count);
+            return (Price * Count);
         }
     }
 }

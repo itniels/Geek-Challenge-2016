@@ -11,8 +11,15 @@ namespace TheGeekStore.Controllers
 {
     public class HomeController : Controller
     {
-        private ProductRepository products = new ProductRepository();
-        private NewsRepository news = new NewsRepository();
+        private ProductRepository products;
+        private NewsRepository news;
+
+        public HomeController()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            products = new ProductRepository(context);
+            news = new NewsRepository(context);
+        }
 
         public ActionResult Index()
         {

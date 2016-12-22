@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -8,7 +9,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using TheGeekStore.Core.Models;
+using TheGeekStore.Core.Services;
 using TheGeekStore.Models;
+using TheGeekStore.Repositories;
 
 namespace TheGeekStore.Controllers
 {
@@ -17,12 +21,16 @@ namespace TheGeekStore.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private CartRepository carts;
+        private ApplicationDbContext context;
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
+            carts = new CartRepository(context);
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -30,26 +38,14 @@ namespace TheGeekStore.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //
@@ -75,10 +71,17 @@ namespace TheGeekStore.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result =
+                await
+                    SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                        shouldLockout: false);
+
+            var uid = context.Users.Single(x => x.Email == model.Email).Id;
+
             switch (result)
             {
                 case SignInStatus.Success:
+                    MergeCarts(uid);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -89,6 +92,45 @@ namespace TheGeekStore.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        private void MergeCarts(string uid)
+        {
+            try
+            {
+                var cid = BrowserStorage.GetCartId(System.Web.HttpContext.Current);
+                if (cid > 0)
+                {
+                    CartModel userCart = carts.FindByUserId(uid);
+                    CartModel sessionCart = carts.FindById(cid);
+
+                    if (sessionCart != null)
+                    {
+                        if (userCart == null)
+                            carts.Add(new CartModel
+                            {
+                                LastAccessed = DateTime.Now,
+                                UserId = uid,
+                                CartItems = new List<CartItemModel>()
+                            });
+
+                        foreach (CartItemModel item in sessionCart.CartItems)
+                        {
+                            if (!userCart.CartItems.Contains(item))
+                            {
+                                userCart.CartItems.Add(item);
+                            }
+                        }
+                        carts.Remove(sessionCart);
+                        BrowserStorage.ClearCartId(System.Web.HttpContext.Current);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+
         }
 
         //
@@ -120,7 +162,7 @@ namespace TheGeekStore.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -155,8 +197,8 @@ namespace TheGeekStore.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

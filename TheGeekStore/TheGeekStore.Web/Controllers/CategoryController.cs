@@ -7,13 +7,20 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
+using TheGeekStore.Models;
 using TheGeekStore.Web.Repositories;
 
 namespace TheGeekStore.Controllers
 {
     public class CategoryController : Controller
     {
-        private CategoryRepository categories = new CategoryRepository();
+        private CategoryRepository categories;
+
+        public CategoryController()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            categories = new CategoryRepository(context);
+        }
 
         // ==============================================================================
         // INDEX

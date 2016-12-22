@@ -10,9 +10,15 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Repositories
 {
-    public class ProductRepository : IRepository<ProductModel>
+    public class ProductRepository : IDisposable, IRepository<ProductModel>
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context;
+
+        public ProductRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
+
         public void Add(ProductModel entity)
         {
             context.Products.Add(entity);
@@ -72,15 +78,20 @@ namespace TheGeekStore.Repositories
         public IEnumerable<ProductModel> GetTop3Sold()
         {
             return (from t in context.Products
-                orderby t.TimesPuchased
-                select t).Take(3);
+                    orderby t.TimesPuchased
+                    select t).Take(3);
         }
+
+        public IEnumerable<ProductModel> GetFeaturedProducts()
+        {
+            return context.Products.Where(x => x.Featured);
+        }
+
 
         public ProductModel GetFeaturedProduct()
         {
             var rand = new Random();
-            var items = GetFeaturedProducts().ToList();
-
+            List<ProductModel> items = GetFeaturedProducts().ToList();
             if (items.Count == 0)
                 return null;
 
@@ -96,9 +107,23 @@ namespace TheGeekStore.Repositories
             return model ?? (model = context.Products.First());
         }
 
-        public IEnumerable<ProductModel> GetFeaturedProducts()
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
         {
-            return context.Products.Where(x => x.Featured);
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

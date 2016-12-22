@@ -14,8 +14,15 @@ namespace TheGeekStore.Controllers
     public class AdminController : Controller
     {
         // Repositories
-        private CategoryRepository categories = new CategoryRepository();
-        private ProductRepository products = new ProductRepository();
+        private CategoryRepository categories;
+        private ProductRepository products;
+
+        public AdminController()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            categories = new CategoryRepository(context);
+            products = new ProductRepository(context);
+        }
 
         // GET: Admin
         [Authorize(Roles = "Admin")]

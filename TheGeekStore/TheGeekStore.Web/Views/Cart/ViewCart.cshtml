@@ -1,7 +1,99 @@
-﻿
+﻿@model TheGeekStore.Core.Models.CartModel
 @{
     ViewBag.Title = "Cart";
+    double shipping = 0.00;
+    if (Model != null)
+    {
+        shipping = Model.CartItems.Count > 0 ? 12.99 : 0.00;
+    }
 }
+
+<span id="shipping-cost" class="hidden">@shipping</span>
 
 <h2>Your cart</h2>
 
+<div class="row">
+    <div class="col-md-6">
+        <p>Here you can review your shopping cart.</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p class="text text-success">Your cart is safe with us, just log in to see it again.</p>
+        }
+        else
+        {
+            <p class="text text-danger">If you @Html.ActionLink("login", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") for a free account we will save your cart and keep it safe.</p>
+        }
+        
+    </div>
+    <div class="col-md-6">
+        @if (Model.CartItems.Count > 0)
+        {
+            <span class="pull-right">
+                <button class="btn btn-warning">Checkout</button>
+            </span>
+        }
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.CartItems.Count > 0)
+        {
+            @Html.Partial("_PartialCartItems", Model)
+        }
+        else
+        {
+            <div class="well well-sm no-items-found">
+                Sorry your cart is empty!
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5 col-md-push-7">
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-5">
+                    <span class="text text-primary"><b>Price:</b></span>
+                </div>
+                <div class="col-md-7">
+                    <span class="text text-primary">
+                        <span>$</span><span id="cart-price">@Model.GetTotalPrice().ToString("0.00")</span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <span class="text text-primary"><b>Shipping:</b></span>
+                </div>
+                <div class="col-md-7">
+                    <span class="text text-primary">
+                        <span>$</span><span>@shipping</span>
+                    </span>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-5">
+                    <span class="text text-success"><b>Total price:</b></span>
+                </div>
+                <div class="col-md-7">
+                    <span class="text text-success">
+                        <b><span>$</span><span id="cart-total-price">@((Model.GetTotalPrice() + shipping).ToString("0.00"))</span></b>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.CartItems.Count > 0)
+        {
+            <span class="pull-right">
+            <button class="btn btn-warning">Checkout</button>
+        </span>
+        }
+    </div>
+</div>

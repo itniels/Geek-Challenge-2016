@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
+using TheGeekStore.Models;
 using TheGeekStore.Repositories;
 using TheGeekStore.Web.Repositories;
 
@@ -12,8 +13,13 @@ namespace TheGeekStore.Controllers
 {
     public class ProductController : Controller
     {
-        private ProductRepository products = new ProductRepository();
-        //private CategoryRepository categories = new CategoryRepository();
+        private ProductRepository products;
+
+        public ProductController()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            products = new ProductRepository(context);
+        }
 
         public ActionResult ViewProduct(int id)
         {

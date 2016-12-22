@@ -10,9 +10,14 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Repositories
 {
-    public class NewsRepository : IRepository<NewsModel>
+    public class NewsRepository : IDisposable, IRepository<NewsModel>
     {
-        private ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context;
+
+        public NewsRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public void Add(NewsModel entity)
         {
@@ -68,8 +73,27 @@ namespace TheGeekStore.Repositories
         public IEnumerable<NewsModel> GetLatest3()
         {
             return (from t in context.News
-                    orderby t.Time descending 
+                    orderby t.Time descending
                     select t).Take(3);
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

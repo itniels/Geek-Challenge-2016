@@ -4,15 +4,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using TheGeekStore.Core.Interfaces;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Models;
 
 namespace TheGeekStore.Repositories
 {
-    public class CartRepository : IRepository<CartModel>
+    public class CartRepository : IDisposable, IRepository<CartModel>
     {
-        private ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context;
+
+        public CartRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public void Add(CartModel entity)
         {
@@ -34,19 +40,26 @@ namespace TheGeekStore.Repositories
 
         public void Remove(CartModel entity)
         {
+            entity.CartItems.Clear();
             context.Carts.Remove(entity);
             context.SaveChanges();
         }
 
         public void RemoveRange(IEnumerable<CartModel> entites)
         {
+            foreach (CartModel cart in entites)
+            {
+                cart.CartItems.Clear();
+            }
             context.Carts.RemoveRange(entites);
             context.SaveChanges();
         }
 
         public void RemoveById(int id)
         {
-            context.Carts.Remove(FindById(id));
+            CartModel cart = FindById(id);
+            cart.CartItems.Clear();
+            context.Carts.Remove(cart);
             context.SaveChanges();
         }
 
@@ -57,7 +70,11 @@ namespace TheGeekStore.Repositories
 
         public CartModel FindById(int id)
         {
-            return context.Carts.Find(id);
+            return (from s in context.Carts.Include(x => x.CartItems)
+                    where s.Id == id
+                    where s.UserId == null
+                    select s)
+                    .FirstOrDefault();
         }
 
         public CartModel FindSingle(Expression<Func<CartModel, bool>> predicate)
@@ -72,7 +89,26 @@ namespace TheGeekStore.Repositories
 
         public CartModel FindByUserId(string uid)
         {
-            return context.Carts.SingleOrDefault(x => x.UserId == uid);
+            return context.Carts.Include(x => x.CartItems).SingleOrDefault(x => x.UserId == uid);
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

@@ -11,9 +11,14 @@ using TheGeekStore.Models;
 
 namespace TheGeekStore.Web.Repositories
 {
-    public class CategoryRepository : IRepository<CategoryModel>
+    public class CategoryRepository : IDisposable, IRepository<CategoryModel>
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private ApplicationDbContext context;
+
+        public CategoryRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public void Add(CategoryModel entity)
         {
@@ -69,6 +74,25 @@ namespace TheGeekStore.Web.Repositories
         public IEnumerable<CategoryModel> FindAny(Expression<Func<CategoryModel, bool>> predicate)
         {
             return context.Set<CategoryModel>().Where(predicate);
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

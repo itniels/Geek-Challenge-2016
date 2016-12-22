@@ -1,0 +1,59 @@
+﻿@model TheGeekStore.Core.Models.CartModel
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>In Stock</th>
+        <th>Amount</th>
+        <th>Total Price</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.CartItems)
+    {
+        <tr>
+            <td><span><img src="@item.Product.ImagePath" width="75"/></span></td>
+            <td>
+                <b><span class="text text-primary">@Html.ActionLink(@item.Product.Name, "ViewProduct", "Product", new { id = item.Product.Id }, null)</span></b>
+                <br/>
+                <span class="text text-muted">(@item.Product.ProductNumber)</span>
+            </td>
+            <td>
+                <span class="text text-primary">
+                    <span>$</span><span>@item.Product.Price.ToString("0.00")</span>
+                </span>
+            </td>
+            <td>
+                @if (item.Product.InStock > 10)
+                {
+                    <span class="label label-success">Yes</span>
+                }
+                else if (item.Product.InStock > 0)
+                {
+                    <span class="label label-warning">Few left!</span>
+                }
+                else
+                {
+                    <span class="label label-danger">No</span>
+                }
+            </td>
+            <td>
+                <button id="amount-minus-@item.Id" class="btn btn-xs @(item.Count == 1 ? "btn-warning":"btn-primary")" onclick="adjustAmount('@item.Id', -1);"><span class="glyphicon glyphicon-minus"></span></button>
+                <b><span> </span><span id="cart-item-count-@item.Id">@item.Count</span><span> </span></b>
+                <button id="amount-plus-@item.Id" class="btn btn-xs btn-primary" onclick="adjustAmount('@item.Id', 1)";><span class="glyphicon glyphicon-plus"></span></button>
+            </td>
+            <td>
+                <span class="text text-success">
+                    <b><span>$</span><span id="cart-item-totalprice-@item.Id">@item.GetTotalPrice().ToString("0.00")</span></b>
+                </span>
+            </td>
+            <td>
+                <button onclick="location.href = '@Url.Action("Remove", "Cart", new {id = item.Id})'" class="btn btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-remove"></span></button>
+            </td>
+        </tr>
+    }
+
+</table>
+<hr />
