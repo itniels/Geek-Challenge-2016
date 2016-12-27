@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
 using TheGeekStore.Models;
@@ -16,12 +19,14 @@ namespace TheGeekStore.Controllers
         // Repositories
         private CategoryRepository categories;
         private ProductRepository products;
+        private PurchaseRepository purchases;
 
         public AdminController()
         {
             ApplicationDbContext context = new ApplicationDbContext();
             categories = new CategoryRepository(context);
             products = new ProductRepository(context);
+            purchases = new PurchaseRepository(context);
         }
 
         // GET: Admin
@@ -34,13 +39,17 @@ namespace TheGeekStore.Controllers
         [Authorize(Roles = "Admin")]
         public PartialViewResult GetPartialOverview()
         {
-            Session["adminpage"] = "/Admin/GetPartialOverview";
-            ApplicationDbContext db = new ApplicationDbContext();
+            Session["adminpage"] = "Overview";
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             AdminOverviewViewModel model = new AdminOverviewViewModel();
+
             model.CountCategories = categories.GetAll().Count();
             model.CountProducts = products.GetAll().Count();
-            model.CountUsers = db.Users.Count();
+            model.CountUsers = roleManager.FindByName("Customer").Users.Select(x => x.UserId).Count();
+            model.CountAdmins = roleManager.FindByName("Admin").Users.Select(x => x.UserId).Count();
             model.CountFeaturedProducts = products.GetFeaturedProducts().Count();
+            model.CountPurchases = purchases.GetAll().Count();
+
             return PartialView("_AdminOverview", model);
         }
 
@@ -68,6 +77,8 @@ namespace TheGeekStore.Controllers
         [Authorize(Roles = "Admin")]
         public PartialViewResult GetPartialCustomers()
         {
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var model =
             Session["adminpage"] = "Customers";
             return PartialView("_AdminCustomers");
         }

@@ -26,30 +26,52 @@ namespace TheGeekStore.Controllers
             purchases = new PurchaseRepository(context);
         }
 
-        public ActionResult ReviewOrder()
-        {
-            // Get cart
-            CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
-            return View(cart);
-        }
+        //public ActionResult ReviewOrder()
+        //{
+        //    // Get cart
+        //    CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
+        //    return View(cart);
+        //}
 
         [HttpGet]
         public ActionResult Shipping()
         {
             CustomerProfileModel profile = customerProfiles.FindByUserId(User.Identity.GetUserId());
+
+            if (profile == null)
+            {
+                // Create a new profile if none exists
+                profile = new CustomerProfileModel();
+                profile.UserId = User.Identity.GetUserId();
+                customerProfiles.Add(profile);
+            }
             return View(profile);
         }
 
         [HttpPost]
         public ActionResult Shipping(CustomerProfileModel model)
         {
-            return RedirectToAction("Payment");
+            if (ModelState.IsValid)
+            {
+                // Save the profile for next time.
+                customerProfiles.Edit(model);
+                // Return Payment view
+                return RedirectToAction("Payment");
+            }
+            return View(model);
+
         }
 
         [HttpGet]
         public ActionResult Payment()
         {
+            CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
+            if (cart == null)
+                return HttpNotFound("Cart was not found...");
+
             PaymentViewModel model = new PaymentViewModel();
+            model.PaymentAmount = cart.GetTotalPrice();
+
             return View(model);
         }
 
@@ -69,6 +91,7 @@ namespace TheGeekStore.Controllers
             CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
             // Create Purchase
             PurchaseModel purchase = new PurchaseModel();
+            purchase.PurchaseItems = new List<PurchaseItemModel>();
             purchase.PriceShipping = 12.99;
             purchase.PurchaseDate = DateTime.Now;
             purchase.UserId = User.Identity.GetUserId();
@@ -87,8 +110,21 @@ namespace TheGeekStore.Controllers
 
             // Delete cart after successful purchase
             carts.Remove(cart);
-            return View();
+            return View("Success");
         }
+
+        //public ActionResult Success(int id)
+        //{
+        //    PurchaseModel purchase = purchases.FindById(id);
+        //    // Create an order
+            
+
+        //    CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
+        //    cart.CartItems.Clear();
+        //    carts.Edit(cart);
+
+        //    return View();
+        //}
 
 
     }

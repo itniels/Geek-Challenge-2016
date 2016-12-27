@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "My Account";
+}
+
+<h2>My Account</h2>
+
+<!--menu-->
+<ul class="nav nav-tabs">
+    <li id="Profile" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeCustomerView('Profile');" href="#Profile">Profile</a></li>
+    <li id="Address" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeCustomerView('Address');" href="#Address">Address</a></li>
+    <li id="Orders" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeCustomerView('Orders');" href="#Orders">Orders</a></li>
+</ul>
+
+<div id="content"></div>
+
+
+@if (Session["customerpage"] != null)
+{
+    <script>
+        changeCustomerView('@Session["customerpage"]', true);
+    </script>
+}
+else
+{
+    <script>
+        changeCustomerView('Profile', true);
+    </script>
+}
+
+@Html.Partial("_PartialModalDetails")

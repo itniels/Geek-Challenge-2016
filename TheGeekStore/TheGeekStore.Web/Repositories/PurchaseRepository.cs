@@ -65,6 +65,11 @@ namespace TheGeekStore.Repositories
             return context.Purchases.Find(id);
         }
 
+        public IEnumerable<PurchaseModel> FindByUserId(string id)
+        {
+            return context.Purchases.Include(x => x.PurchaseItems).Where(x => x.UserId == id);
+        }
+
         public PurchaseModel FindSingle(Expression<Func<PurchaseModel, bool>> predicate)
         {
             return context.Set<PurchaseModel>().Where(predicate).Single();

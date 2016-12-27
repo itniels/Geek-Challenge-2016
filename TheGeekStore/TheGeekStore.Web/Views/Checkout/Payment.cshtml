@@ -1,0 +1,165 @@
+﻿@using System.Web.UI.WebControls
+@model TheGeekStore.Core.ViewModels.PaymentViewModel
+
+@{
+    ViewBag.Title = "Payment";
+}
+<script src="~/Scripts/ValidatorPayment.js"></script>
+
+
+<h2>Payment</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="col-md-6">
+            <span>
+                <img id="cc-mastercard" src="~/Content/Images/Site/CC/MasterCard.png" width="75" />
+            </span>
+            <span>
+                <img id="cc-visa" src="~/Content/Images/Site/CC/Visa.png" width="75" />
+            </span>
+            <span>
+                <img id="cc-amex" src="~/Content/Images/Site/CC/Amex.png" width="75" />
+            </span>
+        </div>
+        <div class="col-md-6">
+            Mastercard: 5555555555554444<br />
+            Visa: 4111111111111111<br />
+            Amex: 378282246310005
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="text-danger">*</span><span>Credit Card Number</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="text-danger">*</span><span>Expires</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="text-danger">*</span><span>CVV Code</span>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="text-primary">Amount from card:</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { id = "cardnumber", onchange = "updateCard(); validatePayment(this);", @class = "form-control", @PlaceHolder = "Credit Card number" } })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Month, new { htmlAttributes = new { id = "month", onchange = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "Month" } })
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { id = "year", onchange = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "Year" } })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { id = "cvv", onchange = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "123" } })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="text text-danger text-paymentamount">
+                        <span>$</span><span id="payment-amounttotal">@Model.PaymentAmount.ToString("0.00")</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="~/Content/Images/Site/100-secure-payment.jpg" width="175" />
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-md-5">
+            <span class="pull-left">
+                <button class="btn btn-primary" type="button" onclick="location.href = '@Url.Action("Shipping", "Checkout")'">Back to shipping</button>
+            </span>
+        </div>
+        <div class="col-md-3">
+            <span class="pull-right">
+                <span>
+                    <img id="processing-payment-anim" src="~/Content/Images/Site/processingPayment.gif" width="40" class="hidden" />
+                    <button id="payment-button" class="btn btn-success disabled" type="button" onclick="processPayment();">Pay Now</button>
+                </span>
+
+            </span>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="row">
+        <div class="col-md-7">
+            <span class="text-danger">
+                This is NOT a real site and any purchases made will NOT be delivered and no money will be taken from any card ever!<br />
+                We do not store or use any credit card info submited here in any way shape or form! <br />
+                The credit card information here will NOT be stored or processed, this is for visual ONLY!
+            </span>
+        </div>
+        <div class="col-md-5">
+            <h4>Demo Credit Cards</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <b>Mastercard:</b>
+                </div>
+                <div class="col-md-6">
+                    <span>5555555555554444</span>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-xs btn-primary" type="button" onclick="fillMastercard();">Fill</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b>Visa:</b>
+                </div>
+                <div class="col-md-6">
+                    <span>4111111111111111</span>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-xs btn-primary" type="button" onclick="fillVisa();">Fill</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <b>Amex:</b>
+                </div>
+                <div class="col-md-6">
+                    <span>378282246310005 </span>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-xs btn-primary" type="button" onclick="fillAmex();">Fill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

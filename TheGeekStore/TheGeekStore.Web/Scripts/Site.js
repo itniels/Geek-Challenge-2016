@@ -96,6 +96,52 @@ function chnageFeatured(id, view) {
 }
 
 // ====================================================
+// Customer Page
+// ====================================================
+// Menu selctor
+function changeCustomerView(url, firstime) {
+    // Loading
+    $("#content").html("Loading... please wait!");
+    // Set action
+    var action = "/Customer/GetPartial" + url;
+    // Active tab
+    if (firstime === true)
+        $("#" + url).addClass("active");
+
+    // Ajax request
+    $.ajax({
+        type: 'GET',
+        url: action,
+        datatype: 'json',
+        success: function (result) {
+            $("#content").html(result);
+        },
+        error: function () {
+            $("#content").html("ERROR!");
+        }
+    });
+}
+
+// Order Details
+function showDetailsModal(id, action) {
+    $("#modal-details-body").html("Please wait! Loading...");
+
+    $.ajax({
+        type: 'GET',
+        url: action,
+        contentType: "application/json; charset=utf-8",
+        datatype: "json",
+        data: { Id: id },
+        success: function (result) {
+            $("#modal-details-body").html(result);
+        },
+        error: function () {
+            $("#modal-details-body").html("Oops.. Something went wrong! :-(");
+        }
+    });
+}
+
+// ====================================================
 // Menu Cart
 // ====================================================
 function updateCart() {
@@ -122,9 +168,10 @@ function updateCart() {
     });
 }
 
-$(document).ready(function() {
-    updateCart();
-})
+$(document)
+    .ready(function() {
+        updateCart();
+    });
 
 // ====================================================
 // Add to Cart
@@ -157,7 +204,7 @@ function adjustAmount(productId, amount) {
     var action = "/Cart/AdjustAmount/";
     var shipping = $("#shipping-cost").html();
     var currentAmount = $("#cart-item-count-" + productId).html();
-    var resultAmount = +currentAmount + amount;
+    var resultAmount = +currentAmount + +amount;
 
     if (resultAmount > 0) {
         $.ajax({
@@ -168,11 +215,13 @@ function adjustAmount(productId, amount) {
             data: { id: productId, amount: amount },
             success: function (result) {
                 var data = JSON.parse(result);
-                var total = (+data.CartPrice + +shipping);
+                console.log(data);
+                var total = +data.CartPrice + +shipping;
                 $("#cart-item-count-" + productId).html(data.Count);
                 $("#cart-item-totalprice-" + productId).html(data.TotalPrice.toFixed(2));
                 $("#cart-price").html(data.CartPrice.toFixed(2));
                 $("#cart-total-price").html(total.toFixed(2));
+                console.log(total);
                 updateCart();
             },
             error: function () {
@@ -188,4 +237,41 @@ function adjustAmount(productId, amount) {
         $("#amount-minus-" + productId).removeClass("btn-primary");
         $("#amount-minus-" + productId).addClass("btn-warning");
     }
+}
+
+// ====================================================
+// Payment Page
+// ====================================================
+function updateCard(obj) {
+    var cardnumber = $("#cardnumber").val();
+
+    if (/^5[1-5]/.test(cardnumber)) {
+        $("#cc-mastercard").removeClass().addClass("cc-shown");
+        $("#cc-visa").removeClass().addClass("cc-faded");
+        $("#cc-amex").removeClass().addClass("cc-faded");
+    } else if (/^4/.test(cardnumber)) {
+        $("#cc-mastercard").removeClass().addClass("cc-faded");
+        $("#cc-visa").removeClass().addClass("cc-shown");
+        $("#cc-amex").removeClass().addClass("cc-faded");
+    }
+    else if (/^3[47]/.test(cardnumber)) {
+        $("#cc-mastercard").removeClass().addClass("cc-faded");
+        $("#cc-visa").removeClass().addClass("cc-faded");
+        $("#cc-amex").removeClass().addClass("cc-shown");
+    } else {
+        $("#cc-mastercard").removeClass().addClass("cc-shown");
+        $("#cc-visa").removeClass().addClass("cc-shown");
+        $("#cc-amex").removeClass().addClass("cc-shown");
+    }
+    $(obj).focus();
+}
+
+function processPayment() {
+    // fake something here!
+    $("#payment-button").addClass("disabled");
+    $("#processing-payment-anim").removeClass();
+    setTimeout(redirectToSuccess, 4000);
+}
+function redirectToSuccess() {
+    window.location.href = "/checkout/CheckOutCart";
 }

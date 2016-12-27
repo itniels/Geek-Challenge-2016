@@ -76,11 +76,11 @@ namespace TheGeekStore.Controllers
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                         shouldLockout: false);
 
-            var uid = context.Users.Single(x => x.Email == model.Email).Id;
 
             switch (result)
             {
                 case SignInStatus.Success:
+                    var uid = context.Users.Single(x => x.Email == model.Email).Id;
                     MergeCarts(uid);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -107,12 +107,13 @@ namespace TheGeekStore.Controllers
                     if (sessionCart != null)
                     {
                         if (userCart == null)
-                            carts.Add(new CartModel
+                            userCart = new CartModel
                             {
                                 LastAccessed = DateTime.Now,
                                 UserId = uid,
                                 CartItems = new List<CartItemModel>()
-                            });
+                            };
+                        carts.Add(userCart);
 
                         foreach (CartItemModel item in sessionCart.CartItems)
                         {
@@ -128,7 +129,7 @@ namespace TheGeekStore.Controllers
             }
             catch (Exception)
             {
-                
+
             }
 
         }
@@ -204,6 +205,9 @@ namespace TheGeekStore.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    var uid = context.Users.Single(x => x.Email == model.Email).Id;
+                    MergeCarts(uid);
 
                     return RedirectToAction("Index", "Home");
                 }

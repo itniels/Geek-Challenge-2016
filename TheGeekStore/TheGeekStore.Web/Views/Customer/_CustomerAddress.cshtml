@@ -1,0 +1,99 @@
+﻿@model TheGeekStore.Core.Models.CustomerProfileModel
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>Full Name</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { id = "input-name", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>Phone</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "input-phone", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>ATT</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrAtt, new { htmlAttributes = new { id = "input-att", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdrAtt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>Street 1</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrStreet1, new { htmlAttributes = new { id = "input-street1", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdrStreet1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>Street 2</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrStreet2, new { htmlAttributes = new { id = "input-street2", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdrStreet2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>Postal</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrPostal, new { htmlAttributes = new { id = "input-postal", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdrPostal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>City</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrCity, new { htmlAttributes = new { id = "input-city", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdrCity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>State</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrState, new { htmlAttributes = new { id = "input-state", onchange = "validateShipping();", @class = "form-control", PlaceHolder = "If applicable only" } })
+                @Html.ValidationMessageFor(model => model.AdrState, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2"><b>Country</b></span>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdrCountry, new { htmlAttributes = new { id = "input-country", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdrCountry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <span class="pull-left">
+                    @*<button class="btn btn-primary" type="button" onclick="location.href = '@Url.Action("ViewCart", "Cart")'">Back to cart</button>*@
+                </span>
+            </div>
+            <div class="col-md-6">
+                <span class="pull-right">
+                    <button class="btn btn-warning" type="submit">Save</button>
+                </span>
+            </div>
+        </div>
+    </div>
+}

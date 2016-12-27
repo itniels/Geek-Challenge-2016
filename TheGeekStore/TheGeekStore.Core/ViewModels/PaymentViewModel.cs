@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheGeekStore.Core.Enums;
 
 namespace TheGeekStore.Core.ViewModels
 {
@@ -11,18 +12,18 @@ namespace TheGeekStore.Core.ViewModels
     {
         [Required]
         [CreditCard]
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; }
 
         [Required]
-        [Range(1, 12)]
-        public int Month { get; set; }
+        public string Month { get; set; }
 
         [Required]
-        [Range(2012, 2030)]
-        public int Year { get; set; }
+        public string Year { get; set; }
 
         [Required]
-        [Range(000,999)]
-        public int CVV { get; set; }
+        public string CVV { get; set; }
+
+        public double PaymentAmount { get; set; }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace TheGeekStore.Core.Models
         public string FullName { get; set; }
 
         // Phone
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
         // Address
@@ -26,7 +28,8 @@ namespace TheGeekStore.Core.Models
 
         public string AdrStreet2 { get; set; }
 
-        public int AdrPostal { get; set; }
+        [DataType(DataType.PostalCode)]
+        public string AdrPostal { get; set; }
 
         public string AdrCity { get; set; }
 

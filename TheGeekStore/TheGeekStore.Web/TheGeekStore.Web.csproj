@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201612212243429_m5.Designer.cs">
       <DependentUpon>201612212243429_m5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612251008422_m6.cs" />
+    <Compile Include="Migrations\201612251008422_m6.Designer.cs">
+      <DependentUpon>201612251008422_m6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -272,9 +276,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\CategoryImages\no_category_image.png" />
     <Content Include="Content\Images\ProductImages\no_product_image.png" />
+    <Content Include="Content\Images\Site\100-secure-payment.jpg" />
+    <Content Include="Content\Images\Site\bike.gif" />
+    <Content Include="Content\Images\Site\CC\Amex.png" />
+    <Content Include="Content\Images\Site\CC\MasterCard.png" />
+    <Content Include="Content\Images\Site\CC\Visa.png" />
     <Content Include="Content\Images\Site\Logo.png" />
     <Content Include="Content\Images\Site\Niels_Small.png" />
     <Content Include="Content\Images\Site\Niels_Small_Round.png" />
+    <Content Include="Content\Images\Site\processingPayment.gif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -308,10 +318,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ValidatorPayment.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ValidatorShipping.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -364,13 +376,21 @@
     <Content Include="Views\DailyDeals\Index.cshtml" />
     <Content Include="Views\Cart\ViewCart.cshtml" />
     <Content Include="Views\Cart\_PartialCartItems.cshtml" />
+    <Content Include="Views\Checkout\ReviewOrder.cshtml" />
+    <Content Include="Views\Checkout\Shipping.cshtml" />
+    <Content Include="Views\Checkout\Payment.cshtml" />
+    <Content Include="Views\Checkout\Success.cshtml" />
+    <Content Include="Views\Customer\MyPage.cshtml" />
+    <Content Include="Views\Customer\_CustomerOrders.cshtml" />
+    <Content Include="Views\Shared\_PartialModalDetails.cshtml" />
+    <Content Include="Views\Customer\_OrderDetails.cshtml" />
+    <Content Include="Views\Customer\_CustomerAddress.cshtml" />
+    <Content Include="Views\Customer\_CustomerProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\PhysicalShops\" />
     <Folder Include="Hubs\" />
-    <Folder Include="Views\Checkout\" />
-    <Folder Include="Views\Customer\" />
     <Folder Include="Views\Menu\" />
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612212243429_m5.resx">
       <DependentUpon>201612212243429_m5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251008422_m6.resx">
+      <DependentUpon>201612251008422_m6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

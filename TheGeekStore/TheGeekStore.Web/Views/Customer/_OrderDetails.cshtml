@@ -1,0 +1,85 @@
+﻿@model TheGeekStore.Core.Models.PurchaseModel
+
+<h4>Order details</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-3">
+        <span class="text text-primary">Order date:</span>
+    </div>
+    <div class="col-md-9">
+        <span class="text text-primary">@Model.PurchaseDate.ToShortDateString() @Model.PurchaseDate.ToShortTimeString()</span>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Product number
+        </th>
+        <th>
+            Product
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>Total price</th>
+    </tr>
+
+    @foreach (var item in Model.PurchaseItems)
+    {
+        <tr>
+            <td>
+                <span>@item.ProductNumber</span>
+            </td>
+            <td>
+                <span>@item.Name</span>
+            </td>
+            <td>
+                <span>$</span><span>@item.Price</span>
+            </td>
+            <td>
+                <span>@item.Count</span>
+            </td>
+            <td>
+                <span>$</span><span>@item.GetTotalPrice()</span>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="well well-sm">
+    <div class="row">
+
+        <div class="col-md-6 col-md-push-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <span>Cart price:</span>
+                </div>
+                <div class="col-md-6">
+                    <span>$</span><span>@Model.GetCartPrice()</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <span>Shipping:</span>
+                </div>
+                <div class="col-md-6">
+                    <span>$</span><span>@Model.PriceShipping</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="text text-success">Total price:</span>
+                </div>
+                <div class="col-md-6">
+                    <span class="text-success">
+                        <span>$</span><span>@Model.GetTotalPrice()</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

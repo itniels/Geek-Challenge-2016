@@ -20,6 +20,15 @@ namespace TheGeekStore.Migrations
         protected override void Seed(TheGeekStore.Models.ApplicationDbContext context)
         {
             // Roles
+            if (!context.Roles.Any(r => r.Name == "Customer"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Customer" };
+
+                manager.Create(role);
+            }
+
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
                 var store = new RoleStore<IdentityRole>(context);
@@ -47,6 +56,7 @@ namespace TheGeekStore.Migrations
                 var user = new ApplicationUser { UserName = "user@tgs.dk", Email = "user@tgs.dk" };
 
                 manager.Create(user, "User123");
+                manager.AddToRole(user.Id, "Customer");
             }
 
             // News

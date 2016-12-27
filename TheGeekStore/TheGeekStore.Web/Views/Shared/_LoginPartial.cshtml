@@ -14,7 +14,8 @@
                         <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
                     }
                     <li>
-                        @Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+                        @*@Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})*@
+                        @Html.ActionLink("My Account", "MyPage", "Customer")
                     </li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>

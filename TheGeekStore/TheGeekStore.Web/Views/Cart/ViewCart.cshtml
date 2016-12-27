@@ -23,13 +23,13 @@
         {
             <p class="text text-danger">If you @Html.ActionLink("login", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") for a free account we will save your cart and keep it safe.</p>
         }
-        
+
     </div>
     <div class="col-md-6">
         @if (Model.CartItems.Count > 0)
         {
             <span class="pull-right">
-                <button class="btn btn-warning">Checkout</button>
+                <button class="btn btn-warning" onclick="location.href = '@Url.Action("Shipping","Checkout")'">Checkout</button>
             </span>
         }
     </div>
@@ -73,7 +73,7 @@
                     </span>
                 </div>
             </div>
-            <br/>
+            <br />
             <div class="row">
                 <div class="col-md-5">
                     <span class="text text-success"><b>Total price:</b></span>
@@ -92,8 +92,8 @@
         @if (Model.CartItems.Count > 0)
         {
             <span class="pull-right">
-            <button class="btn btn-warning">Checkout</button>
-        </span>
+                <button class="btn btn-warning" onclick="location.href = '@Url.Action("Shipping","Checkout")'">Checkout</button>
+            </span>
         }
     </div>
 </div>
