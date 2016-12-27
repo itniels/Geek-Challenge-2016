@@ -162,7 +162,7 @@ namespace TheGeekStore.Migrations
                 new ProductModel
                 {
                     Name = "TGS Gamer 16",
-                    Description = "With this chip you can exend the raspberry pi to accuratly read analog inputs.",
+                    Description = "Our well known and powerful gaming PCs, want to be ahead of the game? you need a TGS Gamer rig to beat the best!",
                     Category = context.Categories.Single(x => x.Name == "Computers"),
                     ImagePath = "/Content/Images/ProductImages/no_product_image.png",
                     Price = 1899.00,

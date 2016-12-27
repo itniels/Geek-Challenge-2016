@@ -1,2 +1,43 @@
-﻿
+﻿@model ICollection<TheGeekStore.Models.AdminUserViewModel>
 <h4>Admins</h4>
+
+<table class="table">
+    <tr>
+        <th>
+            User ID
+        </th>
+        <th>
+            Username / E-Mail
+        </th>
+        <th>
+            Orders
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <span>@item.User.Id</span>
+            </td>
+            <td>
+                <span>@item.User.UserName</span>
+            </td>
+            <td>
+                <span>@item.Orders.Count</span>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-primary" onclick="showDetailsModal(@item.User.Id, '@Url.Action("UserDetails")');" data-toggle="modal" data-target="#modalDetails">Details</button>
+            </td>
+
+        </tr>
+    }
+</table>
+
+@if (Model.Count == 0)
+{
+    <div class="no-items-found">No customers found!</div>
+}
+
+@Html.Partial("_PartialModalDetails")

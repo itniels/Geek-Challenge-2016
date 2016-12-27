@@ -17,16 +17,21 @@ namespace TheGeekStore.Controllers
     public class AdminController : Controller
     {
         // Repositories
+        private ApplicationDbContext context;
         private CategoryRepository categories;
         private ProductRepository products;
         private PurchaseRepository purchases;
+        private CustomerProfileRepository profiles;
+        private RoleManager<IdentityRole> roleManager;
 
         public AdminController()
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            context = new ApplicationDbContext();
             categories = new CategoryRepository(context);
             products = new ProductRepository(context);
             purchases = new PurchaseRepository(context);
+            profiles = new CustomerProfileRepository(context);
+            roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
         }
 
         // GET: Admin
@@ -40,7 +45,6 @@ namespace TheGeekStore.Controllers
         public PartialViewResult GetPartialOverview()
         {
             Session["adminpage"] = "Overview";
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             AdminOverviewViewModel model = new AdminOverviewViewModel();
 
             model.CountCategories = categories.GetAll().Count();
@@ -77,17 +81,36 @@ namespace TheGeekStore.Controllers
         [Authorize(Roles = "Admin")]
         public PartialViewResult GetPartialCustomers()
         {
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            var model =
             Session["adminpage"] = "Customers";
-            return PartialView("_AdminCustomers");
+            var users = roleManager.FindByName("Customer").Users;
+            ICollection<AdminUserViewModel> model = new List<AdminUserViewModel>();
+            foreach (var user in users)
+            {
+                AdminUserViewModel item = new AdminUserViewModel();
+                item.User = context.Users.SingleOrDefault(x => x.Id == user.UserId);
+                item.Address = profiles.FindByUserId(item.User.Id);
+                item.Orders = purchases.FindByUserId(item.User.Id).ToList();
+                model.Add(item);
+            }
+            
+            return PartialView("_AdminCustomers", model);
         }
 
         [Authorize(Roles = "Admin")]
         public PartialViewResult GetPartialAdmins()
         {
             Session["adminpage"] = "Admins";
-            return PartialView("_AdminAdmins");
+            var users = roleManager.FindByName("Admin").Users;
+            ICollection<AdminUserViewModel> model = new List<AdminUserViewModel>();
+            foreach (var user in users)
+            {
+                AdminUserViewModel item = new AdminUserViewModel();
+                item.User = context.Users.SingleOrDefault(x => x.Id == user.UserId);
+                item.Address = profiles.FindByUserId(item.User.Id);
+                item.Orders = purchases.FindByUserId(item.User.Id).ToList();
+                model.Add(item);
+            }
+            return PartialView("_AdminAdmins", model);
         }
 
         [Authorize(Roles = "Admin")]
