@@ -14,24 +14,20 @@ namespace TheGeekStore.Controllers
     [Authorize]
     public class CheckoutController : Controller
     {
+        private ApplicationDbContext context;
         private CartRepository carts;
         private CustomerProfileRepository customerProfiles;
         private PurchaseRepository purchases;
+        private ProductRepository products;
 
         public CheckoutController()
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            context = new ApplicationDbContext();
             carts = new CartRepository(context);
             customerProfiles = new CustomerProfileRepository(context);
             purchases = new PurchaseRepository(context);
+            products = new ProductRepository(context);
         }
-
-        //public ActionResult ReviewOrder()
-        //{
-        //    // Get cart
-        //    CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
-        //    return View(cart);
-        //}
 
         [HttpGet]
         public ActionResult Shipping()
@@ -105,6 +101,10 @@ namespace TheGeekStore.Controllers
                     Price = item.Product.Price,
                     Count = item.Count
                 });
+                // Update InStock
+                item.Product.InStock--;
+                products.Edit(item.Product);
+                
             }
             purchases.Add(purchase);
 

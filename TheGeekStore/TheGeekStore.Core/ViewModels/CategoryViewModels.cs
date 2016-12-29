@@ -24,4 +24,23 @@ namespace TheGeekStore.Core.ViewModels
         [DataType(DataType.Upload)]
         public HttpPostedFileBase UploadedFile { get; set; }
     }
+
+    public class EditCategoryViewModel
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Category Name")]
+        [DataType(DataType.Text)]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Category Description")]
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
+
+        [Display(Name = "Category Image")]
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase UploadedFile { get; set; }
+    }
 }

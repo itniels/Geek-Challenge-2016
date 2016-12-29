@@ -34,5 +34,10 @@ namespace TheGeekStore.Core.Models
             }
             return Description;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -1,16 +1,9 @@
-﻿@using System.Web.UI.WebControls
-@using TheGeekStore.Core.Models
-@model IEnumerable<TheGeekStore.Core.Models.CategoryModel>
-<h4>Categories</h4>
+﻿@model ICollection<TheGeekStore.Core.Models.ProductModel>
+@{
+    ViewBag.Title = "Search";
+}
 
-<!--Menu-->
-<div class="row">
-    <div class="pull-right">
-        @*<button class="btn btn-sm btn-success" onclick="location.href = '@Url.Action("Create", "Category")'">New Category</button>*@
-        <button class="btn btn-sm btn-success" onclick="changeViewAction('/Category/Create');">New Category</button>
-    </div>
-</div>
-<br/>
+<h2>Search results</h2>
 
 <table class="table">
     <tr>
@@ -20,9 +13,6 @@
         </th>
         <th>
             Description
-        </th>
-        <th>
-            Products
         </th>
         <th></th>
     </tr>
@@ -40,10 +30,9 @@
                 <span>@item.GetExcerpt()</span>
             </td>
             <td>
-                <span>@item.Products.Count</span>
+                <button class="btn btn-sm btn-primary">Goto</button>
             </td>
-            
-            <td>
+            @*<td>
                 <div class="pull-right listview-menu-button">
                     <div class="dropdown listview-menu-button">
                         <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -56,24 +45,7 @@
                         </ul>
                     </div>
                 </div>
-            </td>
+            </td>*@
         </tr>
     }
 </table>
-
-<!-- Modal Delete -->
-<span id="delete-item-id" hidden="hidden"></span>
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <div id="modal-body-delete" class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="deleteItem('@Url.Action("Delete", "Category")');" data-dismiss="modal">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Back to safety</button>
-            </div>
-        </div>
-    </div>
-</div>

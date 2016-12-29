@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
 using TheGeekStore.Models;
 using TheGeekStore.Repositories;
@@ -42,6 +43,11 @@ namespace TheGeekStore.Controllers
             ViewBag.Message = "Contact us.";
 
             return View();
+        }
+
+        public ActionResult Search(string search)
+        {
+            return View(products.SearchFor(search));
         }
     }
 }

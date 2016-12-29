@@ -68,7 +68,45 @@ function changeView(url, firstime) {
     });
 }
 
-function chnageFeatured(id, view) {
+// Action selctor
+function changeViewAction(url) {
+    // Loading
+    $("#content").html("Loading... please wait!");
+
+    // Ajax request
+    $.ajax({
+        type: 'GET',
+        url: url,
+        datatype: 'json',
+        success: function (result) {
+            $("#content").html(result);
+        },
+        error: function () {
+            $("#content").html("ERROR!");
+        }
+    });
+}
+
+function changeViewEdit(url, id) {
+    // Loading
+    $("#content").html("Loading... please wait!");
+
+    // Ajax request
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: {id: id},
+        datatype: 'json',
+        success: function (result) {
+            $("#content").html(result);
+        },
+        error: function () {
+            $("#content").html("ERROR!");
+        }
+    });
+}
+
+function changeFeatured(id, view) {
     var url = "/Admin/ChangeFeatured";
     $.ajax({
         type: 'GET',
@@ -78,21 +116,59 @@ function chnageFeatured(id, view) {
         success: function (result) {
             if (result === "True") {
                 //changeView(view);
+                $("#featured-btn-" + id).html("Unfeature");
                 $("#featured-btn-" + id).removeClass("btn-success");
                 $("#featured-btn-" + id).addClass("btn-warning");
-                $("#featured-btn-" + id).val("Unfeature");
+                
             } else {
+                $("#featured-btn-" + id).html("Feature");
                 $("#featured-btn-" + id).removeClass("btn-warning");
                 $("#featured-btn-" + id).addClass("btn-success");
-                $("#featured-btn-" + id).val("Feature");
+                
             }
         },
         error: function () {
             alert("Whoops! Something went wrong...");
         }
     });
+}
 
+// =====================================================
+// Delete Modal
+// =====================================================
+function showDeleteModal(id, action) {
+    $("#modal-body-delete").html("Please wait! Loading...");
+    $("#delete-item-id").html(id);
 
+    $.ajax({
+        type: 'GET',
+        url: action,
+        contentType: "application/json; charset=utf-8",
+        datatype: "json",
+        data: { Id: id },
+        success: function (result) {
+            $("#modal-body-delete").html(result);
+        },
+        error: function () {
+            $("#modal-body-delete").html("Oops.. Something went wrong! :-(");
+        }
+    });
+}
+
+function deleteItem(action) {
+    var id = $("#delete-item-id").html();
+
+    $.ajax({
+        type: 'POST',
+        url: action,
+        data: { Id: id },
+        success: function (result) {
+            location.reload();
+        },
+        error: function () {
+            alert("Oops.. Something went wrong! :-(");
+        }
+    });
 }
 
 // ====================================================
@@ -274,4 +350,12 @@ function processPayment() {
 }
 function redirectToSuccess() {
     window.location.href = "/checkout/CheckOutCart";
+}
+
+// ====================================================
+// Search
+// ====================================================
+function TopSearch(term) {
+    console.log(term);
+    return term;
 }

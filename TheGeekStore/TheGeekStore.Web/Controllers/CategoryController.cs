@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Newtonsoft.Json;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
@@ -60,7 +61,7 @@ namespace TheGeekStore.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("Index", "Admin");
             }
 
             // Set data
@@ -98,7 +99,55 @@ namespace TheGeekStore.Controllers
         // ==============================================================================
         // EDIT
         // ==============================================================================
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult Edit(int id)
+        {
+            CategoryModel category = categories.FindById(id);
+            if (category == null)
+                return null;
 
+            EditCategoryViewModel model = new EditCategoryViewModel();
+            model.Id = category.Id;
+            model.Name = category.Name;
+            model.Description = category.Description;
+
+            return PartialView("_EditCategory", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public ActionResult Edit(EditCategoryViewModel model)
+        {
+            CategoryModel category = categories.FindById(model.Id);
+            category.Name = model.Name;
+            category.Description = model.Description;
+
+            // uploaded file
+            if (model.UploadedFile != null && model.UploadedFile.ContentLength > 0)
+            {
+                // Remove old
+                if (!category.ImagePath.Contains("no_category_image.png"))
+                    System.IO.File.Delete(category.ImagePath);
+
+                // Add new
+                string directory = Server.MapPath("~/Content/Images/CategoryImages/");
+                string filename = model.Name + Path.GetExtension(model.UploadedFile.FileName);
+                var path = Path.Combine(directory, filename);
+
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                model.UploadedFile.SaveAs(path);
+                category.ImagePath = "/Content/Images/CategoryImages/" + filename;
+            }
+
+            categories.Edit(category);
+            return RedirectToAction("Index", "Admin");
+        }
 
 
         // ==============================================================================
@@ -106,14 +155,16 @@ namespace TheGeekStore.Controllers
         // ==============================================================================
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmation(int id)
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult DeleteConfirmation(int id)
         {
             CategoryModel model = categories.FindById(id);
-            return View(model);
+            return PartialView("_CategoryDelete", model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Delete(int id)
         {
             CategoryModel model = categories.FindById(id);

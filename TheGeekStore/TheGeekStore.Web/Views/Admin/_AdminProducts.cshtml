@@ -4,7 +4,7 @@
 <!--Menu-->
 <div class="row">
     <div class="pull-right">
-        <button class="btn btn-sm btn-success">New Product</button>
+        <button class="btn btn-sm btn-success" onclick="changeViewAction('/Product/Create');">New Product</button>
     </div>
 </div>
 <br />
@@ -45,7 +45,7 @@
                 <span>@item.Category.Name</span>
             </td>
             <td>
-            <button id="featured-btn-@item.Id" onclick="chnageFeatured(@item.Id, '/Admin/GetPartialProducts');" class="btn btn-xs btn-@(item.Featured ? "warning":"success")">@(item.Featured ? "Unfeature" : "Feature")</button>
+                <button id="featured-btn-@item.Id" onclick="changeFeatured('@item.Id', '/Admin/GetPartialProducts');" class="btn btn-xs btn-@(item.Featured ? "warning":"success")">@(item.Featured ? "Unfeature" : "Feature")</button>
             </td>
             <td>
                 
@@ -55,9 +55,9 @@
                             <span class="glyphicon glyphicon-tasks"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li class="power-menu-edit"><a href="#" onclick="location.href = '@Url.Action("Edit", "Category", new {id = item.Id})'"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+                            <li class="power-menu-edit"><a href="#" onclick="changeViewEdit('/Product/Edit', '@item.Id')"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
 
-                            <li class="power-menu-delete"><a href="#" onclick="showDeleteModal(@item.Id, '@Url.Action("Delete", "Category")');" data-toggle="modal" data-target="#modalDelete"><span class="glyphicon glyphicon-remove"></span> <span class="power-menu-delete-text">Delete</span> </a></li>
+                            <li class="power-menu-delete"><a href="#" onclick="showDeleteModal(@item.Id, '@Url.Action("DeleteConfirmation", "Product")');" data-toggle="modal" data-target="#modalDelete"><span class="glyphicon glyphicon-remove"></span> <span class="power-menu-delete-text">Delete</span> </a></li>
                         </ul>
                     </div>
                 </div>
@@ -65,3 +65,20 @@
         </tr>
     }
 </table>
+
+<!-- Modal Delete -->
+<span id="delete-item-id" hidden="hidden"></span>
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div id="modal-body-delete" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteItem('@Url.Action("Delete", "Product")');" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Back to safety</button>
+            </div>
+        </div>
+    </div>
+</div>

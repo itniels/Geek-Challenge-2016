@@ -87,6 +87,12 @@ namespace TheGeekStore.Repositories
             return context.Products.Where(x => x.Featured);
         }
 
+        public IEnumerable<ProductModel> SearchFor(string term)
+        {
+            ICollection<ProductModel> result = context.Products.Where(x => x.Name.Contains(term) || x.Description.Contains(term) || x.ProductNumber.Contains(term)).ToList();
+            return result;
+        }
+
 
         public ProductModel GetFeaturedProduct()
         {

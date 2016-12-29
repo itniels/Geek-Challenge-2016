@@ -1,10 +1,11 @@
-﻿@model TheGeekStore.Core.ViewModels.CreateCategoryViewModel
+﻿@model TheGeekStore.Core.ViewModels.EditCategoryViewModel
 
-<h4>New Category</h4>
+<h4>Edit @Model.Name</h4>
 
-@using (Html.BeginForm("Create", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
 
     <div class="form-horizontal">
         <hr />
@@ -35,7 +36,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-success"/>
+                <input type="submit" value="Update" class="btn btn-success"/>
             </div>
         </div>
     </div>
