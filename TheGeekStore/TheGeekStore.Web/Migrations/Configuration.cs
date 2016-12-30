@@ -195,8 +195,7 @@ namespace TheGeekStore.Migrations
                     InStock = 100,
                     TimesPuchased = 0,
                     Featured = true
-                }
-                );
+                });
         }
     }
 }

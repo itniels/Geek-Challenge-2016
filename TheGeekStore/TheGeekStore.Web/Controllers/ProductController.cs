@@ -66,7 +66,7 @@ namespace TheGeekStore.Controllers
                 Category = categories.FindByName(model.CategoryName),
                 Featured = model.Featured,
                 TimesPuchased = 0,
-                ProductNumber = model.ProductNumber.Length == 0 ? GenerateProductNumber(model.CategoryName) : model.ProductNumber,
+                ProductNumber = model.ProductNumber ?? GenerateProductNumber(model.CategoryName),
             InStock = model.InStock,
                 Price = model.Price
             };
@@ -133,7 +133,7 @@ namespace TheGeekStore.Controllers
             product.Name = model.Name;
             product.Description = model.Description;
             product.Category = categories.FindByName(model.CategoryName);
-            product.ProductNumber = model.ProductNumber.Length == 0 ? GenerateProductNumber(model.CategoryName) : model.ProductNumber;
+            product.ProductNumber = model.ProductNumber ?? GenerateProductNumber(model.CategoryName);
             product.Price = model.Price;
             product.InStock = model.InStock;
             product.Featured = model.Featured;
@@ -187,9 +187,8 @@ namespace TheGeekStore.Controllers
         private string GenerateProductNumber(string categoryName)
         {
             var n1 = categoryName[0].ToString().ToUpper();
-            var n2 = DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day;
-            var n3 = DateTime.Now.TimeOfDay.TotalSeconds.ToString();
-
+            var n2 = DateTime.Now.ToString("yyyyMMdd");
+            var n3 = DateTime.Now.ToString("HHmmssfff");
             return n1 + n2 + n3;
         }
     }

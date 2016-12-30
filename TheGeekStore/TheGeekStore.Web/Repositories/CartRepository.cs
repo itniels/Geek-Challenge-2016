@@ -69,6 +69,16 @@ namespace TheGeekStore.Repositories
             return context.Carts.ToList();
         }
 
+        public IEnumerable<CartModel> GetExpired(int days)
+        {
+            TimeSpan ts = new TimeSpan(days, 0, 0, 0);
+            DateTime expired = DateTime.Now.Subtract(ts);
+            return (from s in context.Carts.Include(x => x.CartItems)
+                where s.UserId == null
+                where s.LastAccessed < expired
+                select s).ToList();
+        }
+
         public CartModel FindById(int id)
         {
             return (from s in context.Carts.Include(x => x.CartItems)

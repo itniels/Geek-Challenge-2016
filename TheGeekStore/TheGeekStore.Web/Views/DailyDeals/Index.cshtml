@@ -1,4 +1,4 @@
-﻿
+﻿@model ICollection<TheGeekStore.Core.Models.DailyDealModel>
 @{
     ViewBag.Title = "Index";
 }
@@ -6,3 +6,75 @@
 <h2>Daily Deals</h2>
 <h4>Find the best deals on TGS - Only today!</h4>
 
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Save
+        </th>
+        <th>
+            In Stock
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@item.Product.ImagePath" width="150" />
+                <br />
+                <span>@item.Product.ProductNumber</span><br />
+            </td>
+            <td>
+                @item.Product.Name
+            </td>
+            <td class="category-description-col">
+                @item.Product.Description
+            </td>
+            <td>
+                <span>$</span><span>@item.Product.Price.ToString("0.00")</span>
+            </td>
+            <td>
+                <span class="badge">Save 15%</span>
+            </td>
+            <td>
+                @if (item.Product.InStock > 10)
+                {
+                    <span class="label label-success">Yes</span>
+                }
+                else if (item.Product.InStock > 0)
+                {
+                    <span class="label label-warning">Few left!</span>
+                }
+                else
+                {
+                    <span class="label label-danger">No</span>
+                }
+            </td>
+            <td>
+                <div class="pull-right">
+                    <button class="btn btn-xs btn-primary" onclick="location.href = '@Url.Action("ViewProduct", "Product", new {id = item.Product.Id})'">View Product</button>
+                    <button class="btn btn-xs btn-success" onclick="addToCart(@item.Product.Id);">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Add to cart
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@if (@Model.Count == 0)
+{
+    <div class="no-items-found">No daily deals found :-/</div>
+}

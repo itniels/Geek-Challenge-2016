@@ -39,5 +39,6 @@ namespace TheGeekStore.Models
         public DbSet<PurchaseModel> Purchases { get; set; }
         public DbSet<PurchaseItemModel> PurchaseItems { get; set; }
         public DbSet<CustomerProfileModel> CustomerProfiles { get; set; }
+        public DbSet<DailyDealModel> DailyDeals { get; set; }
     }
 }

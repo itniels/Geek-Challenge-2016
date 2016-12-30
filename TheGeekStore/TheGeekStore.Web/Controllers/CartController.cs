@@ -103,6 +103,9 @@ namespace TheGeekStore.Controllers
 
         public ActionResult Remove(int id)
         {
+            // Call SignalR
+            var context = GlobalHost.ConnectionManager.GetHubContext<ProductPageHub>();
+            
             CartModel cart = GetCart();
             List<CartItemModel> matches = new List<CartItemModel>();
             foreach (CartItemModel item in cart.CartItems)
@@ -114,6 +117,7 @@ namespace TheGeekStore.Controllers
             {
                 cart.CartItems.Remove(item);
                 carts.Edit(cart);
+                context.Clients.All.ReadyToBuy(item.Product.Id, carts.ProductCountInCarts(item.Product));
             }
             return RedirectToAction("ViewCart");
         }

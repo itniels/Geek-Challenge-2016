@@ -228,6 +228,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HangFire\Jobs.cs" />
     <Compile Include="Hubs\ProductPageHub.cs" />
     <Compile Include="Migrations\201611252317019_m0.cs" />
     <Compile Include="Migrations\201611252317019_m0.Designer.cs">
@@ -261,6 +262,18 @@
     <Compile Include="Migrations\201612300837598_m7.Designer.cs">
       <DependentUpon>201612300837598_m7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612302214078_m8.cs" />
+    <Compile Include="Migrations\201612302214078_m8.Designer.cs">
+      <DependentUpon>201612302214078_m8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612302244482_m9.cs" />
+    <Compile Include="Migrations\201612302244482_m9.Designer.cs">
+      <DependentUpon>201612302244482_m9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612302255360_m10.cs" />
+    <Compile Include="Migrations\201612302255360_m10.Designer.cs">
+      <DependentUpon>201612302255360_m10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminUserViewModel.cs" />
@@ -270,6 +283,7 @@
     <Compile Include="Repositories\CartRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\CustomerProfileRepository.cs" />
+    <Compile Include="Repositories\DailyDealRepository.cs" />
     <Compile Include="Repositories\NewsRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\PurchaseRepository.cs" />
@@ -438,6 +452,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612300837598_m7.resx">
       <DependentUpon>201612300837598_m7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612302214078_m8.resx">
+      <DependentUpon>201612302214078_m8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612302244482_m9.resx">
+      <DependentUpon>201612302244482_m9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612302255360_m10.resx">
+      <DependentUpon>201612302255360_m10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
