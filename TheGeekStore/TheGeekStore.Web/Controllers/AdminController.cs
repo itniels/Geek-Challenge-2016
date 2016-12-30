@@ -14,6 +14,7 @@ using TheGeekStore.Web.Repositories;
 
 namespace TheGeekStore.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         // Repositories
@@ -35,13 +36,12 @@ namespace TheGeekStore.Controllers
         }
 
         // GET: Admin
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialOverview()
         {
             Session["adminpage"] = "Overview";
@@ -57,28 +57,35 @@ namespace TheGeekStore.Controllers
             return PartialView("_AdminOverview", model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialCategories()
         {
             Session["adminpage"] = "Categories";
             return PartialView("_AdminCategories", categories.GetAll());
         }
 
-        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialProducts()
         {
             Session["adminpage"] = "Products";
             return PartialView("_AdminProducts", products.GetAll());
         }
 
-        [Authorize(Roles = "Admin")]
-        public PartialViewResult GetPartialStatistics()
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult GetPartialOrders()
         {
-            Session["adminpage"] = "Statistics";
-            return PartialView("_AdminStatistics");
+            Session["adminpage"] = "Orders";
+            return PartialView("_AdminOrders", purchases.GetAll().ToList());
         }
 
-        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult OrderDetails(int id)
+        {
+            PurchaseModel model = purchases.FindById(id);
+            return PartialView("_OrderDetails", model);
+        }
+
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialCustomers()
         {
             Session["adminpage"] = "Customers";
@@ -96,7 +103,7 @@ namespace TheGeekStore.Controllers
             return PartialView("_AdminCustomers", model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialAdmins()
         {
             Session["adminpage"] = "Admins";
@@ -113,7 +120,7 @@ namespace TheGeekStore.Controllers
             return PartialView("_AdminAdmins", model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public bool ChangeFeatured(int id)
         {
             if (id <= 0)

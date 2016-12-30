@@ -34,6 +34,7 @@ namespace TheGeekStore.Controllers
         }
 
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialProfile()
         {
             string uid = User.Identity.GetUserId();
@@ -46,6 +47,7 @@ namespace TheGeekStore.Controllers
         }
 
         [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult GetPartialProfile(CustomerProfileViewModel model)
         {
             var store = new UserStore<ApplicationUser>(context);
@@ -70,6 +72,7 @@ namespace TheGeekStore.Controllers
         }
 
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialAddress()
         {
             Session["customerpage"] = "Address";
@@ -85,6 +88,7 @@ namespace TheGeekStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult GetPartialAddress(CustomerProfileModel model)
         {
             if (ModelState.IsValid)
@@ -95,6 +99,7 @@ namespace TheGeekStore.Controllers
         }
 
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult GetPartialOrders()
         {
             Session["customerpage"] = "Orders";
@@ -103,6 +108,7 @@ namespace TheGeekStore.Controllers
             return PartialView("_CustomerOrders", model);
         }
 
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult Details(int id)
         {
             PurchaseModel model = purchases.FindById(id);

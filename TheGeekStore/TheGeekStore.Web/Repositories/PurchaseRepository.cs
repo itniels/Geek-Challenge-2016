@@ -57,7 +57,7 @@ namespace TheGeekStore.Repositories
 
         public IEnumerable<PurchaseModel> GetAll()
         {
-            return context.Purchases.ToList();
+            return context.Purchases.OrderByDescending(x => x.PurchaseDate).ToList();
         }
 
         public PurchaseModel FindById(int id)

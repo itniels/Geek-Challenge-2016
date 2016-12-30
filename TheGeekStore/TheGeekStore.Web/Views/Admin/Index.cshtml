@@ -11,7 +11,7 @@
     <li id="Overview" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Overview');" href="#overview">Overview</a></li>
     <li id="Categories" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Categories');" href="#categories">Categories</a></li>
     <li id="Products" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Products');" href="#products">Products</a></li>
-    @*<li id="Statistics" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Statistics');" href="#top10">Statistics</a></li>*@
+    <li id="Orders" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Orders');" href="#orders">Orders</a></li>
     <li id="Customers" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Customers');" href="#customers">Customers</a></li>
     <li id="Admins" role="presentation" class="admin-menu"><a data-toggle="tab" onclick="changeView('Admins');" href="#admins">Admins</a></li>
 </ul>
@@ -32,3 +32,4 @@ else
     </script>
 }
 
+@Html.Partial("_PartialModalDetails")

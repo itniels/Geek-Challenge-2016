@@ -257,6 +257,10 @@
     <Compile Include="Migrations\201612251008422_m6.Designer.cs">
       <DependentUpon>201612251008422_m6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612300837598_m7.cs" />
+    <Compile Include="Migrations\201612300837598_m7.Designer.cs">
+      <DependentUpon>201612300837598_m7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminUserViewModel.cs" />
@@ -396,6 +400,8 @@
     <Content Include="Views\Category\_EditCategory.cshtml" />
     <Content Include="Views\Product\_EditProduct.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Admin\_AdminOrders.cshtml" />
+    <Content Include="Views\Admin\_OrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -429,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612251008422_m6.resx">
       <DependentUpon>201612251008422_m6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612300837598_m7.resx">
+      <DependentUpon>201612300837598_m7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

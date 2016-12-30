@@ -62,6 +62,7 @@
     <Compile Include="Services\BrowserStorage.cs" />
     <Compile Include="SignalRModels\UserTrackingModel.cs" />
     <Compile Include="ViewModels\AdminOverviewViewModel.cs" />
+    <Compile Include="ViewModels\AdminViewModels.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\CustomerProfileViewModel.cs" />
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />

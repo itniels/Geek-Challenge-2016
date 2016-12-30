@@ -94,6 +94,19 @@ namespace TheGeekStore.Controllers
             purchase.PriceShipping = 12.99;
             purchase.PurchaseDate = DateTime.Now;
             purchase.UserId = User.Identity.GetUserId();
+            purchase.EMail = User.Identity.GetUserName();
+
+            CustomerProfileModel profile = customerProfiles.FindByUserId(purchase.UserId);
+            purchase.FullName = profile.FullName;
+            purchase.PhoneNumber = profile.PhoneNumber;
+            purchase.AdrAtt = profile.AdrAtt;
+            purchase.AdrStreet1 = profile.AdrStreet1;
+            purchase.AdrStreet2 = profile.AdrStreet2;
+            purchase.AdrPostal = profile.AdrPostal;
+            purchase.AdrCity = profile.AdrCity;
+            purchase.AdrState = profile.AdrState;
+            purchase.AdrCountry = profile.AdrCountry;
+
             foreach (CartItemModel item in cart.CartItems)
             {
                 purchase.PurchaseItems.Add(new PurchaseItemModel
@@ -105,8 +118,8 @@ namespace TheGeekStore.Controllers
                     Count = item.Count
                 });
                 // Update InStock and purchases
-                item.Product.InStock--;
-                item.Product.TimesPuchased++;
+                item.Product.InStock =- item.Count;
+                item.Product.TimesPuchased =+ item.Count;
                 products.Edit(item.Product);
 
                 // SignalR
@@ -118,11 +131,6 @@ namespace TheGeekStore.Controllers
 
             // Delete cart after successful purchase
             carts.Remove(cart);
-
-            // Call SignalR
-            
-            
-
             return View("Success");
         }
     }
