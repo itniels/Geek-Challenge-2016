@@ -355,7 +355,41 @@ function redirectToSuccess() {
 // ====================================================
 // Search
 // ====================================================
-function TopSearch(term) {
+function TopSearchClear() {
+    $("#search-top").val("");
+    $("#search-results").html("");
+}
+
+function TopSearch() {
+    var term = $("#search-top").val();
+    var action = "/Home/Search";
     console.log(term);
-    return term;
+    $("#search-results").html("");
+    if (term.length > 0) {
+        $("#search-results").html("<hr>");
+        $.ajax({
+            type: 'GET',
+            url: action,
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            data: { search: term },
+            success: function(result) {
+                var data = JSON.parse(result);
+                $(data).each(function (i, obj) {
+                    // <div class="search-result"><a href="/Product/ViewProduct/3">Some very very long product name Product</a></div>
+                        $("#search-results")
+                            .append(
+                                '<div class="search-result"><a href="/Product/ViewProduct/' +
+                                obj.productId +
+                                '">' +
+                                obj.Name +
+                                '</a></div>'
+                        );
+                    });
+            },
+            error: function() {
+                $("#search-results").html("Sorry someting went wrong!");
+            }
+        });
+    }
 }

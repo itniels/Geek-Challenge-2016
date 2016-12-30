@@ -8,10 +8,10 @@
 <h5>(@Model.Product.ProductNumber)</h5>
 @*<h5>In <b>@Html.ActionLink(@Model.Product.Category.Name, "Browse", "Category", new { id = Model.Product.Category.Id }, null)</b></h5>*@
 
-<hr/>
+<hr />
 <div class="row">
     <div class="col-md-6">
-        <img src="@Model.Product.ImagePath" width="450"/>
+        <img src="@Model.Product.ImagePath" width="450" />
     </div>
     <div class="col-md-6">
         <div class="row">
@@ -22,13 +22,13 @@
                 <span class="text text-primary"><span>$</span>@Model.Product.Price.ToString("0.00")</span>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <div class="col-md-5">
                 <span class="text text-info">In stock:</span>
             </div>
             <div class="col-md-7">
-                <span class="text text-primary">@Model.Product.InStock pcs</span>
+                <span id="instock" class="text text-primary">@Model.Product.InStock pcs</span>
             </div>
         </div>
         <hr />
@@ -37,7 +37,7 @@
                 <span class="text text-info">Purchased:</span>
             </div>
             <div class="col-md-7">
-                <span class="text text-primary">@Model.Product.TimesPuchased times</span>
+                <span id="times-purchased" class="text text-primary">@Model.Product.TimesPuchased times</span>
             </div>
         </div>
         <hr />
@@ -46,7 +46,7 @@
                 <span class="text text-info">People looking at this:</span>
             </div>
             <div class="col-md-7">
-                <span class="text text-primary">0 people</span>
+                <span id="people-looking" class="text text-primary">0 people</span>
             </div>
         </div>
         <hr />
@@ -55,7 +55,7 @@
                 <span class="text text-info">People ready to buy this:</span>
             </div>
             <div class="col-md-7">
-                <span class="text text-primary">0 people</span>
+                <span id="people-readytobuy" class="text text-primary">@Model.PeopleReadyToBuy  @(Model.PeopleReadyToBuy == 1 ? "person" : "people")</span>
             </div>
         </div>
         <hr />
@@ -71,7 +71,7 @@
         </div>
     </div>
 </div>
-<hr/>
+<hr />
 <div class="row">
     <div class="col-md-12">
         <h4>Product Info</h4>
@@ -82,11 +82,11 @@
         <p>@Model.Product.Description</p>
     </div>
 </div>
-<hr/>
+<hr />
 <div class="well well-sm">
     <div class="row">
         <div class="col-md-12">
-            <h4>Related <b>@Html.ActionLink(@Model.Product.Category.Name, "Browse", "Category", new {id = Model.Product.Category.Id},null)</b> products</h4>
+            <h4>Related <b>@Html.ActionLink(@Model.Product.Category.Name, "Browse", "Category", new { id = Model.Product.Category.Id }, null)</b> products</h4>
         </div>
     </div>
     <div class="row">
@@ -116,3 +116,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    srPeopleLookingAtProduct(@Model.Product.Id);
+</script>

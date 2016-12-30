@@ -30,6 +30,7 @@ namespace TheGeekStore
             // Site and SignalR JS bundle
             bundles.Add(new ScriptBundle("~/Bundles/Site").Include(
                     "~/Scripts/Site.js",
+                    "~/Scripts/SiteSignalR.js",
                     "~/Scripts/jquery.signalR-*"));
         }
     }

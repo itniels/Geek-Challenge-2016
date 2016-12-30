@@ -12,6 +12,7 @@ namespace TheGeekStore.Core.ViewModels
     public class ViewProductViewModel
     {
         public ProductModel Product { get; set; }
+        public int PeopleReadyToBuy { get; set; }
         public IEnumerable<ProductModel> RelatedProducts { get; set; }
     }
 

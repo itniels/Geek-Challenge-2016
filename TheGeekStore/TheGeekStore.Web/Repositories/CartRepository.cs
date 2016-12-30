@@ -40,6 +40,7 @@ namespace TheGeekStore.Repositories
 
         public void Remove(CartModel entity)
         {
+            context.CartItems.RemoveRange(entity.CartItems);
             entity.CartItems.Clear();
             context.Carts.Remove(entity);
             context.SaveChanges();
@@ -90,6 +91,11 @@ namespace TheGeekStore.Repositories
         public CartModel FindByUserId(string uid)
         {
             return context.Carts.Include(x => x.CartItems).SingleOrDefault(x => x.UserId == uid);
+        }
+
+        public int ProductCountInCarts(ProductModel product)
+        {
+            return context.CartItems.Count(x => x.Product.Id == product.Id);
         }
 
         private bool disposed = false;

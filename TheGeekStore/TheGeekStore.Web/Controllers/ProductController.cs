@@ -17,18 +17,21 @@ namespace TheGeekStore.Controllers
         private ApplicationDbContext context;
         private ProductRepository products;
         private CategoryRepository categories;
+        private CartRepository carts;
 
         public ProductController()
         {
             context = new ApplicationDbContext();
             products = new ProductRepository(context);
             categories = new CategoryRepository(context);
+            carts = new CartRepository(context);
         }
 
         public ActionResult ViewProduct(int id)
         {
             ViewProductViewModel model = new ViewProductViewModel();
             model.Product = products.FindById(id);
+            model.PeopleReadyToBuy = carts.ProductCountInCarts(model.Product);
             model.RelatedProducts = model.Product.Category.Products.Where(x => x.Id != id).Take(3);
             return View(model);
         }

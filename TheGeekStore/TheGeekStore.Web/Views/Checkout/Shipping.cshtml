@@ -44,7 +44,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>Full Name</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { id="input-name", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { id="input-name", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>Phone</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "input-phone", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "input-phone", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>ATT</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrAtt, new { htmlAttributes = new { id = "input-att", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.AdrAtt, new { htmlAttributes = new { id = "input-att", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdrAtt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>Street 1</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrStreet1, new { htmlAttributes = new { id = "input-street1", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.AdrStreet1, new { htmlAttributes = new { id = "input-street1", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdrStreet1, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>Street 2</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrStreet2, new { htmlAttributes = new { id = "input-street2", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.AdrStreet2, new { htmlAttributes = new { id = "input-street2", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdrStreet2, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>Postal</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrPostal, new { htmlAttributes = new { id = "input-postal", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.AdrPostal, new { htmlAttributes = new { id = "input-postal", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdrPostal, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -92,7 +92,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>City</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrCity, new { htmlAttributes = new { id = "input-city", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.AdrCity, new { htmlAttributes = new { id = "input-city", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdrCity, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -100,7 +100,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>State</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrState, new { htmlAttributes = new { id = "input-state", onchange = "validateShipping();", @class = "form-control", PlaceHolder = "If applicable only" } })
+                @Html.EditorFor(model => model.AdrState, new { htmlAttributes = new { id = "input-state", oninput = "validateShipping();", @class = "form-control", PlaceHolder = "If applicable only" } })
                 @Html.ValidationMessageFor(model => model.AdrState, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -108,7 +108,7 @@
         <div class="form-group">
             <span class="control-label col-md-2"><b>Country</b></span>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AdrCountry, new { htmlAttributes = new { id = "input-country", onchange = "validateShipping();", @class = "form-control" } })
+                @Html.EditorFor(model => model.AdrCountry, new { htmlAttributes = new { id = "input-country", oninput = "validateShipping();", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AdrCountry, "", new { @class = "text-danger" })
             </div>
         </div>

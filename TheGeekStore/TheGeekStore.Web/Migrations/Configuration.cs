@@ -178,7 +178,7 @@ namespace TheGeekStore.Migrations
                     Description = "The new chargestation from TGS will charge up to 10 devices with a whopping 3.5A for each.",
                     Category = context.Categories.Single(x => x.Name == "Electronics"),
                     ImagePath = "/Content/Images/ProductImages/no_product_image.png",
-                    Price = 1899.00,
+                    Price = 199.49,
                     ProductNumber = "E20161003",
                     InStock = 50,
                     TimesPuchased = 0

@@ -1,7 +1,6 @@
 ﻿$(document).ready(validatePayment());
 
 function validatePayment() {
-    console.log("validating payment...");
     var isValid = true;
     var cc = $("#cardnumber").val();
     var month = $("#month").val();
@@ -13,15 +12,15 @@ function validatePayment() {
         isValid = false;
     }
     // Month
-    if (month.isNaN()|| month === "" || +month <= 0 || +month > 12) {
+    if (month.isNaN || month === "" || +month <= 0 || +month > 12) {
         isValid = false;
     }
     // Year
-    if (year.isNaN() || year === "" || +year < 16) {
+    if (year.isNaN || year === "" || +year < 16) {
         isValid = false;
     }
     // CVV
-    if (cvv.isNaN() || cvv === "" || cvv > 999) {
+    if (cvv.isNaN || cvv === "" || cvv > 999) {
         isValid = false;
     }
 

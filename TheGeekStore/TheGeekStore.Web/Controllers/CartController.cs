@@ -4,10 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using TheGeekStore.Core.JsonModels;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.Services;
+using TheGeekStore.Hubs;
 using TheGeekStore.Models;
 using TheGeekStore.Repositories;
 
@@ -71,6 +73,10 @@ namespace TheGeekStore.Controllers
                 item.Count++;
             }
             carts.Edit(cart);
+
+            // Call SignalR
+            var context = GlobalHost.ConnectionManager.GetHubContext<ProductPageHub>();
+            context.Clients.All.ReadyToBuy(selectedProduct.Id, carts.ProductCountInCarts(selectedProduct));
 
             return true;
         }

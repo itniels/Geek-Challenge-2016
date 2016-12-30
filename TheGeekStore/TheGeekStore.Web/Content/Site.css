@@ -67,3 +67,11 @@ textarea {
     -o-transition: opacity .25s ease-in-out;
     transition: opacity .25s ease-in-out;
 }
+
+.top-search {
+    width: 400px;
+}
+
+.top-search-input {
+    min-width: 370px;
+}

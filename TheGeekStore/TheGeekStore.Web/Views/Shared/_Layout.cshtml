@@ -10,6 +10,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/Site")
+    <script src="/signalr/hubs" type="text/javascript"></script>
 
     @{
         var Menu = new MenuController();
@@ -50,22 +51,29 @@
                 </ul>
                 @Html.Partial("_LoginPartial")
                 <ul class="nav navbar-nav navbar-right">
+                    
+                    <!--Search-->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" onclick="TopSearchClear();"><span class="glyphicon glyphicon-search"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <form class="navbar-form navbar-left">
+                            <div class="navbar-form navbar-left top-search">
                                 <span class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search"/>
+                                    <input id="search-top" type="text" class="form-control top-search-input" oninput="TopSearch();"  placeholder="Search product (Name, Description or product code)"/>
                                 </span>
-                            </form>
+                                <span id="search-results"></span>
+                            </div>
+                            
                         </ul>
                     </li>
+                    <!--/Search-->
+                    <!--Cart-->
                     <li>
                         <a id="menu-cart" href="#" onclick="location.href = '@Url.Action("ViewCart", "Cart")'">
                             <span class="glyphicon glyphicon-shopping-cart"></span>
                             <span class="label label-success" id="cart-itemscount">0</span> <span class="label label-success"><span>$</span><span id="cart-amounttotal">0.00</span></span>
                         </a>
                     </li>
+                    <!--/Cart-->
                 </ul>
             </div>
         </div>

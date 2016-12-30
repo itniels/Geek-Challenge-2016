@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using TheGeekStore.Core.JsonModels;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
 using TheGeekStore.Models;
@@ -45,9 +47,21 @@ namespace TheGeekStore.Controllers
             return View();
         }
 
-        public ActionResult Search(string search)
+        [HttpGet]
+        public string Search(string search)
         {
-            return View(products.SearchFor(search));
+            List<ProductModel> matches = products.SearchFor(search).ToList();
+            List<JsonProductSearch> list = new List<JsonProductSearch>();
+            foreach (ProductModel productModel in matches)
+            {
+                list.Add(new JsonProductSearch
+                {
+                    productId = productModel.Id,
+                    Name = productModel.Name
+                });
+            }
+            var json = JsonConvert.SerializeObject(list);
+            return json;
         }
     }
 }

@@ -27,9 +27,9 @@
             </span>
         </div>
         <div class="col-md-6">
-            Mastercard: 5555555555554444<br />
+            @*Mastercard: 5555555555554444<br />
             Visa: 4111111111111111<br />
-            Amex: 378282246310005
+            Amex: 378282246310005*@
         </div>
     </div>
     <hr />
@@ -65,22 +65,22 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { id = "cardnumber", onchange = "updateCard(); validatePayment(this);", @class = "form-control", @PlaceHolder = "Credit Card number" } })
+                    @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { id = "cardnumber", oninput = "updateCard(); validatePayment(this);", @class = "form-control", @PlaceHolder = "Credit Card number" } })
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-6">
-                    @Html.EditorFor(model => model.Month, new { htmlAttributes = new { id = "month", onchange = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "Month" } })
+                    @Html.EditorFor(model => model.Month, new { htmlAttributes = new { id = "month", oninput = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "MM" } })
                 </div>
                 <div class="col-md-6">
-                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { id = "year", onchange = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "Year" } })
+                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { id = "year", oninput = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "YY" } })
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { id = "cvv", onchange = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "123" } })
+                    @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { id = "cvv", oninput = "updateCard(); validatePayment(this);", @class = "form-control", PlaceHolder = "123" } })
                 </div>
             </div>
             <br />

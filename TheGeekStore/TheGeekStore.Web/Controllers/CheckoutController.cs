@@ -4,14 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.SignalR;
 using TheGeekStore.Core.Models;
 using TheGeekStore.Core.ViewModels;
+using TheGeekStore.Hubs;
 using TheGeekStore.Models;
 using TheGeekStore.Repositories;
 
 namespace TheGeekStore.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class CheckoutController : Controller
     {
         private ApplicationDbContext context;
@@ -84,6 +86,7 @@ namespace TheGeekStore.Controllers
         // GET: Checkout
         public ActionResult CheckOutCart()
         {
+            var context = GlobalHost.ConnectionManager.GetHubContext<ProductPageHub>();
             CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
             // Create Purchase
             PurchaseModel purchase = new PurchaseModel();
@@ -101,31 +104,26 @@ namespace TheGeekStore.Controllers
                     Price = item.Product.Price,
                     Count = item.Count
                 });
-                // Update InStock
+                // Update InStock and purchases
                 item.Product.InStock--;
+                item.Product.TimesPuchased++;
                 products.Edit(item.Product);
-                
+
+                // SignalR
+                context.Clients.All.ReadyToBuy(item.Product.Id, carts.ProductCountInCarts(item.Product));
+                context.Clients.All.TimesPurchased(item.Product.Id, item.Product.TimesPuchased, item.Product.InStock);
+                context.Clients.All.ReadyToBuy(item.Product.Id, carts.ProductCountInCarts(item.Product));
             }
             purchases.Add(purchase);
 
             // Delete cart after successful purchase
             carts.Remove(cart);
-            return View("Success");
-        }
 
-        //public ActionResult Success(int id)
-        //{
-        //    PurchaseModel purchase = purchases.FindById(id);
-        //    // Create an order
+            // Call SignalR
+            
             
 
-        //    CartModel cart = carts.FindByUserId(User.Identity.GetUserId());
-        //    cart.CartItems.Clear();
-        //    carts.Edit(cart);
-
-        //    return View();
-        //}
-
-
+            return View("Success");
+        }
     }
 }
