@@ -1,5 +1,5 @@
 ﻿// ===============================================================
-// People looking at this
+// Product Page
 // ===============================================================
 function srPeopleLookingAtProduct(pid) {
     // Ref the hub

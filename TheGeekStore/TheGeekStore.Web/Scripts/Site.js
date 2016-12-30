@@ -278,7 +278,7 @@ function addToCart(productId) {
 // ====================================================
 function adjustAmount(productId, amount) {
     var action = "/Cart/AdjustAmount/";
-    var shipping = $("#shipping-cost").html();
+    var shipping = $("#shipping-cost").val();
     var currentAmount = $("#cart-item-count-" + productId).html();
     var resultAmount = +currentAmount + +amount;
 
@@ -291,13 +291,15 @@ function adjustAmount(productId, amount) {
             data: { id: productId, amount: amount },
             success: function (result) {
                 var data = JSON.parse(result);
-                console.log(data);
-                var total = +data.CartPrice + +shipping;
-                $("#cart-item-count-" + productId).html(data.Count);
-                $("#cart-item-totalprice-" + productId).html(data.TotalPrice.toFixed(2));
-                $("#cart-price").html(data.CartPrice.toFixed(2));
+                var priceCart = data.CartPrice.toFixed(2);
+                var priceTotal = data.TotalPrice.toFixed(2);
+                var countItem = data.Count;
+                var total = +(priceCart + shipping);
+
+                $("#cart-item-count-" + productId).html(countItem);
+                $("#cart-item-totalprice-" + productId).html(priceTotal);
+                $("#cart-price").html(priceCart);
                 $("#cart-total-price").html(total.toFixed(2));
-                console.log(total);
                 updateCart();
             },
             error: function () {
@@ -363,7 +365,6 @@ function TopSearchClear() {
 function TopSearch() {
     var term = $("#search-top").val();
     var action = "/Home/Search";
-    console.log(term);
     $("#search-results").html("");
     if (term.length > 0) {
         $("#search-results").html("<hr>");
