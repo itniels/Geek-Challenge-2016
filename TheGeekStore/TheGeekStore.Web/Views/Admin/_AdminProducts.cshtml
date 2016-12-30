@@ -22,6 +22,9 @@
             Category
         </th>
         <th>
+            Price
+        </th>
+        <th>
             Featured
         </th>
         <th></th>
@@ -44,6 +47,7 @@
             <td>
                 <span>@item.Category.Name</span>
             </td>
+            <td><span>$</span><span class="text text-success">@item.Price.ToString("0.00")</span></td>
             <td>
                 <button id="featured-btn-@item.Id" onclick="changeFeatured('@item.Id', '/Admin/GetPartialProducts');" class="btn btn-xs btn-@(item.Featured ? "warning":"success")">@(item.Featured ? "Unfeature" : "Feature")</button>
             </td>

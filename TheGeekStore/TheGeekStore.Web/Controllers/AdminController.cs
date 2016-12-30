@@ -121,6 +121,13 @@ namespace TheGeekStore.Controllers
         }
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult UserDetails(string id)
+        {
+            CustomerProfileModel model = profiles.FindByUserId(id);
+            return PartialView("_UserDetails", model);
+        }
+
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public bool ChangeFeatured(int id)
         {
             if (id <= 0)

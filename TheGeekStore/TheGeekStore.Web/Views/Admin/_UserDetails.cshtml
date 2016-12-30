@@ -1,0 +1,82 @@
+﻿@model TheGeekStore.Core.Models.CustomerProfileModel
+
+@if (Model == null)
+{
+    <div class="no-items-found">Sorry this user does not have a profile yet!</div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">Name:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.FullName</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">ATT:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrAtt</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">Phone:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.PhoneNumber</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">Street1:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrStreet1</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">Street2:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrStreet2</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">Postal:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrPostal</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">City:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrCity</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">State:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrState</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span class="text text-primary">Country:</span>
+        </div>
+        <div class="col-md-9">
+            <span class="text text-primary">@Model.AdrCountry</span>
+        </div>
+    </div>
+}
+

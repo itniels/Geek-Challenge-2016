@@ -198,10 +198,11 @@ function changeCustomerView(url, firstime) {
     });
 }
 
-// Order Details
+// Admin Details
 function showDetailsModal(id, action) {
+    console.log(action);
     $("#modal-details-body").html("Please wait! Loading...");
-
+    
     $.ajax({
         type: 'GET',
         url: action,
